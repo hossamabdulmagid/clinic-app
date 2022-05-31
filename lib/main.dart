@@ -5,7 +5,6 @@ void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
-
   static const String _title = 'MY CLINIC';
 
   @override
@@ -13,6 +12,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,29 +25,49 @@ class _MyAppState extends State<MyApp> {
             title: const Center(child: Text(MyApp._title))),
         body: const MyStatefulWidget(),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.greenAccent,
+          unselectedItemColor: Colors.grey,
           items: const [
             BottomNavigationBarItem(
+                activeIcon: Icon(
+                  Icons.privacy_tip,
+                  color: Color.fromRGBO(107, 201, 213, 1),
+                ),
                 label: 'Terms of Service',
                 icon: Icon(Icons.privacy_tip,
-                    color: Color.fromRGBO(107, 201, 213, 1),
-                    semanticLabel: "read Privacy Policy",
-                    size: 24.0)),
+                    color: Colors.grey,
+                    semanticLabel: "Read Privacy Policy",
+                    size: 22.0)),
             BottomNavigationBarItem(
+                activeIcon: Icon(
+                  Icons.key,
+                  color: Color.fromRGBO(107, 201, 213, 1),
+                ),
                 label: 'Refund Policy',
                 icon: Icon(Icons.key,
-                    color: Color.fromRGBO(107, 201, 213, 1),
-                    semanticLabel: "read Privacy Policy",
-                    size: 24.0)),
+                    color: Colors.grey,
+                    semanticLabel: "Read Privacy Policy",
+                    size: 22.0)),
             BottomNavigationBarItem(
+                activeIcon: Icon(
+                  Icons.privacy_tip_rounded,
+                  color: Color.fromRGBO(107, 201, 213, 1),
+                ),
                 label: 'Privacy Policy.',
                 icon: Icon(
                   Icons.privacy_tip_rounded,
-                  color: Color.fromRGBO(107, 201, 213, 1),
-                  size: 24.0,
-                  semanticLabel: "read Privacy Policy",
+                  color: Colors.grey,
+                  size: 22.0,
+                  semanticLabel: "Read Privacy Policy",
                 ))
           ],
-          currentIndex: 0,
+          currentIndex: currentIndex,
+          onTap: (int index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
         ),
       ),
     );
