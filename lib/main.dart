@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
         body: const MyStatefulWidget(),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.greenAccent,
+          selectedItemColor: const Color.fromRGBO(107, 201, 213, 1),
           unselectedItemColor: Colors.grey,
           items: const [
             BottomNavigationBarItem(
