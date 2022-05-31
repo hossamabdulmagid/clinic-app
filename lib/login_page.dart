@@ -1,12 +1,12 @@
 // ignore: unnecessary_import
 import 'dart:convert';
-import 'dart:io';
 // ignore: avoid_web_libraries_in_flutter
 
 import 'package:flutter/material.dart';
 import 'package:my_clinic/home_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:dio/dio.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -21,59 +21,59 @@ class _LoginPageState extends State<LoginPage> {
   bool isLoading = false;
 
   // we need fucntion to Sign In Here;
-  signIn(String login, String password) async {
-    String url = 'http://base.maado.me/api/v1/auth/login';
-    String type = 'client';
-    String clinicId = '6270321a0584c700120df0ae';
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map body = {
-      login: "hosamabdulmaged@gmail.com	",
-      password: "xmasterkey",
-      type: "client",
-      clinicId: "6270321a0584c700120df0ae",
-    };
-    // ignore: prefer_typing_uninitialized_variables
-    var jsonResponse;
-    var res = await http.post(
-      Uri.parse(url),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        "login": login,
-        "password": password,
-        type: type,
-        clinicId: clinicId,
-      }),
-    );
+  // signIn(String login, String password) async {
+  //   String url = 'http://base.maado.me/api/v1/auth/login';
+  //   String type = 'client';
+  //   String clinicId = '6270321a0584c700120df0ae';
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   Map body = {
+  //     login: "hosamabdulmaged@gmail.com	",
+  //     password: "xmasterkey",
+  //     type: "client",
+  //     clinicId: "6270321a0584c700120df0ae",
+  //   };
+  //   // ignore: prefer_typing_uninitialized_variables
+  //   var jsonResponse;
+  //   var res = await http.post(
+  //     Uri.parse(url),
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode(<String, String>{
+  //       "login": login,
+  //       "password": password,
+  //       type: type,
+  //       clinicId: clinicId,
+  //     }),
+  //   );
 
-    if (res.statusCode == 200) {
-      jsonResponse = json.decode(res.body);
-      print("Response status : ${res.statusCode}");
-      print("Response status : ${res.body}");
-    }
+  //   if (res.statusCode == 200) {
+  //     jsonResponse = json.decode(res.body);
+  //     print("Response status : ${res.statusCode}");
+  //     print("Response status : ${res.body}");
+  //   }
 
-    if (res.statusCode == 308) {
-      print('308 success');
-      print("Response status : ${res.body}");
-    }
+  //   if (res.statusCode == 308) {
+  //     print('308 success');
+  //     print("Response status : ${res.body}");
+  //   }
 
-    if (jsonResponse != null) {
-      setState(() {
-        isLoading = false;
-      });
+  //   if (jsonResponse != null) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
 
-      sharedPreferences.setString('token', jsonResponse['token']);
-      Navigator.of(this.context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => HomePage()),
-          (Route<dynamic> route) => false);
-    } else {
-      setState(() {
-        isLoading == false;
-      });
-      print("Response status : ${res.body}");
-    }
-  }
+  //     sharedPreferences.setString('token', jsonResponse['token']);
+  //     Navigator.of(this.context).pushAndRemoveUntil(
+  //         MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+  //         (Route<dynamic> route) => false);
+  //   } else {
+  //     setState(() {
+  //       isLoading == false;
+  //     });
+  //     print("Response status : ${res.body}");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -154,15 +154,9 @@ class _LoginPageState extends State<LoginPage> {
                     primary: const Color.fromRGBO(
                         107, 201, 213, 1), // Background color
                   ),
-                  onPressed: nameController.text == "" ||
-                          passwordController.text == ""
-                      ? null
-                      : () {
-                          setState(() {
-                            isLoading = true;
-                          });
-                          signIn(nameController.text, passwordController.text);
-                        },
+                  onPressed: () {
+                    Login();
+                  },
                   child: Text("Sign In..."),
                 )),
             Row(
@@ -183,5 +177,54 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ));
+  }
+
+  Future<void> Login() async {
+    if (passwordController.text.isNotEmpty && nameController.text.isNotEmpty) {
+      // var response = await Dio().post(
+      //   "http://base.maado.me/api/v1/auth/login",
+      //   data: ({
+      //     "login": nameController.text,
+      //     "password": passwordController.text,
+      //     "type": "client",
+      //     "clinicId": "6270321a0584c700120df0ae",
+      //   }),
+      //   options: Options(
+      //     followRedirects: false,
+      //   ),
+      // );
+      var response = await http.post(
+        Uri.parse('http://base.maado.me/api/v1/auth/login'),
+        // headers: {"Content-Type": "application/json"},
+        // headers: <String, String>{
+        //   'Content-Type': 'application/json; charset=UTF-8',
+        // },
+        headers: {"Accept": "application/json"},
+        body: ({
+          "login": nameController.text,
+          "password": passwordController.text,
+          "type": "client",
+          "clinicId": "6270321a0584c700120df0ae",
+        }),
+      );
+      if (response.statusCode == 308) {
+        print('status == 308');
+        print(nameController.text);
+        print(passwordController.text);
+        print(response.statusCode);
+      }
+      if (response.statusCode == 200) {
+        // ignore: use_build_context_synchronously
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      } else {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invalid Credenialse...')));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Black Field Not Allowed')));
+    }
   }
 }
