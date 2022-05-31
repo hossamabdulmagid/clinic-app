@@ -1,5 +1,6 @@
-// ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
+import 'package:my_clinic/login_page.dart';
+import 'package:my_clinic/home_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
             backgroundColor: const Color.fromRGBO(107, 201, 213, 1),
             title: const Center(child: Text(MyApp._title))),
-        body: const MyStatefulWidget(),
+        body: LoginPage(),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: const Color.fromRGBO(107, 201, 213, 1),
@@ -71,126 +72,5 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
-  }
-}
-
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  String buttonName = 'Sign In...';
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(
-          children: <Widget>[
-            Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-                child: const Text(
-                  'Welcome back to clinic',
-                  style: TextStyle(
-                      color: Color.fromRGBO(107, 201, 213, 1),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 30),
-                )),
-            Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-                child: const Text(
-                  '',
-                  style: TextStyle(fontSize: 20),
-                )),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: TextField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color.fromRGBO(107, 201, 213, 1)),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color.fromRGBO(107, 201, 213, 1)),
-                  ),
-                  labelText: 'Email/Phone',
-                  labelStyle: TextStyle(
-                    color: Color.fromRGBO(107, 201, 213, 1),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: TextField(
-                obscureText: true,
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color.fromRGBO(107, 201, 213, 1)),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Color.fromRGBO(107, 201, 213, 1)),
-                  ),
-                  labelText: 'Password',
-                  labelStyle: TextStyle(
-                    color: Color.fromRGBO(107, 201, 213, 1),
-                  ),
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                //forgot password screen
-              },
-              child: const Text('Forgot Password',
-                  style: TextStyle(color: Color.fromRGBO(107, 201, 213, 1))),
-            ),
-            Container(
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: const Color.fromRGBO(
-                        107, 201, 213, 1), // Background color
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      buttonName = 'Loading...';
-                    });
-                    print(nameController.text);
-                    print(passwordController.text);
-                  },
-                  child: Text(buttonName),
-                )),
-            Row(
-              // ignore: sort_child_properties_last
-              children: <Widget>[
-                const Text('By clicking "Sign in" you agree to our'),
-                TextButton(
-                  child: const Text(
-                    'Terms of Service',
-                    style: TextStyle(color: Color.fromRGBO(107, 201, 213, 1)),
-                  ),
-                  onPressed: () {
-                    //signup screen
-                  },
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            ),
-          ],
-        ));
   }
 }
