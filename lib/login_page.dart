@@ -201,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
         },
         body: jsonEncode(<String, String>{
           "login": "hosamabdulmaged@gmail.com",
-          "password": "xmasterKey",
+          "password": "xxx",
           "type": "client",
           "clinicId": "6270321a0584c700120df0ae",
         }),
