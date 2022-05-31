@@ -1,5 +1,6 @@
 // ignore: unnecessary_import
 import 'dart:convert';
+import 'dart:io';
 // ignore: avoid_web_libraries_in_flutter
 
 import 'package:flutter/material.dart';
@@ -19,7 +20,17 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   String buttonName = 'Sign In...';
   bool isLoading = false;
+  var url = Uri.encodeFull('https://base.maado.me/api/v1/auth/login');
+  Map<String, String> headers = {
+    'Content-Type': 'application/json',
+  };
 
+  final body = jsonEncode({
+    "login": "hosamabdulmaged@gmail.com",
+    "password": "xmasterKey",
+    "type": "client",
+    "clinicId": "6270321a0584c700120df0ae",
+  });
   // we need fucntion to Sign In Here;
   // signIn(String login, String password) async {
   //   String url = 'http://base.maado.me/api/v1/auth/login';
@@ -155,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                         107, 201, 213, 1), // Background color
                   ),
                   onPressed: () {
-                    Login();
+                    Login(nameController.text, passwordController.text);
                   },
                   child: Text("Sign In..."),
                 )),
@@ -179,40 +190,22 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
-  Future<void> Login() async {
-    if (passwordController.text.isNotEmpty && nameController.text.isNotEmpty) {
-      // var response = await Dio().post(
-      //   "http://base.maado.me/api/v1/auth/login",
-      //   data: ({
-      //     "login": nameController.text,
-      //     "password": passwordController.text,
-      //     "type": "client",
-      //     "clinicId": "6270321a0584c700120df0ae",
-      //   }),
-      //   options: Options(
-      //     followRedirects: false,
-      //   ),
-      // );
-      var response = await http.post(
-        Uri.parse('http://base.maado.me/api/v1/auth/login'),
-        // headers: {"Content-Type": "application/json"},
-        // headers: <String, String>{
-        //   'Content-Type': 'application/json; charset=UTF-8',
-        // },
-        headers: {"Accept": "application/json"},
-        body: ({
-          "login": nameController.text,
-          "password": passwordController.text,
+  Future<void> Login(String login, String password) async {
+    String login = nameController.text;
+    String password = passwordController.text;
+    if (nameController.text.isNotEmpty || passwordController.text.isNotEmpty) {
+      final response = await http.post(
+        Uri.parse('https://base.maado.me/api/v1/auth/login'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          "login": "hosamabdulmaged@gmail.com",
+          "password": "xmasterKey",
           "type": "client",
           "clinicId": "6270321a0584c700120df0ae",
         }),
       );
-      if (response.statusCode == 308) {
-        print('status == 308');
-        print(nameController.text);
-        print(passwordController.text);
-        print(response.statusCode);
-      }
       if (response.statusCode == 200) {
         // ignore: use_build_context_synchronously
         Navigator.push(
@@ -222,9 +215,6 @@ class _LoginPageState extends State<LoginPage> {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Invalid Credenialse...')));
       }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Black Field Not Allowed')));
     }
   }
 }
