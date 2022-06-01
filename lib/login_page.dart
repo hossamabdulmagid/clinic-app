@@ -17,74 +17,18 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   TextEditingController nameController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+
   String buttonName = 'Sign In...';
+
   bool isLoading = false;
+
   var url = Uri.encodeFull('https://base.maado.me/api/v1/auth/login');
+
   Map<String, String> headers = {
     'Content-Type': 'application/json',
   };
-
-  final body = jsonEncode({
-    "login": "hosamabdulmaged@gmail.com",
-    "password": "xmasterKey",
-    "type": "client",
-    "clinicId": "6270321a0584c700120df0ae",
-  });
-  // we need fucntion to Sign In Here;
-  // signIn(String login, String password) async {
-  //   String url = 'http://base.maado.me/api/v1/auth/login';
-  //   String type = 'client';
-  //   String clinicId = '6270321a0584c700120df0ae';
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //   Map body = {
-  //     login: "hosamabdulmaged@gmail.com	",
-  //     password: "xmasterkey",
-  //     type: "client",
-  //     clinicId: "6270321a0584c700120df0ae",
-  //   };
-  //   // ignore: prefer_typing_uninitialized_variables
-  //   var jsonResponse;
-  //   var res = await http.post(
-  //     Uri.parse(url),
-  //     headers: <String, String>{
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     },
-  //     body: jsonEncode(<String, String>{
-  //       "login": login,
-  //       "password": password,
-  //       type: type,
-  //       clinicId: clinicId,
-  //     }),
-  //   );
-
-  //   if (res.statusCode == 200) {
-  //     jsonResponse = json.decode(res.body);
-  //     print("Response status : ${res.statusCode}");
-  //     print("Response status : ${res.body}");
-  //   }
-
-  //   if (res.statusCode == 308) {
-  //     print('308 success');
-  //     print("Response status : ${res.body}");
-  //   }
-
-  //   if (jsonResponse != null) {
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-
-  //     sharedPreferences.setString('token', jsonResponse['token']);
-  //     Navigator.of(this.context).pushAndRemoveUntil(
-  //         MaterialPageRoute(builder: (BuildContext context) => HomePage()),
-  //         (Route<dynamic> route) => false);
-  //   } else {
-  //     setState(() {
-  //       isLoading == false;
-  //     });
-  //     print("Response status : ${res.body}");
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -191,8 +135,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> Login(String login, String password) async {
-    String login = nameController.text;
-    String password = passwordController.text;
+    final body = jsonEncode({
+      "login": nameController.text,
+      "password": passwordController.text,
+      "type": "client",
+      "clinicId": "6270321a0584c700120df0ae",
+    });
     if (nameController.text.isNotEmpty || passwordController.text.isNotEmpty) {
       final response = await http.post(
         Uri.parse('https://base.maado.me/api/v1/auth/login'),
@@ -200,13 +148,16 @@ class _LoginPageState extends State<LoginPage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
-          "login": "hosamabdulmaged@gmail.com",
-          "password": "xxx",
+          "login": login,
+          "password": password,
           "type": "client",
           "clinicId": "6270321a0584c700120df0ae",
         }),
       );
+
       if (response.statusCode == 200) {
+        print('log the body after res = 200');
+
         // ignore: use_build_context_synchronously
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
@@ -215,6 +166,9 @@ class _LoginPageState extends State<LoginPage> {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Invalid Credenialse...')));
       }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Empty Field Not Allowed Pleace Get In Touch...')));
     }
   }
 }

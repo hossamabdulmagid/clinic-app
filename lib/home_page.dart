@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Welcome User'),
+          const Text('Welcome User}'),
           const SizedBox(
             height: 30,
           ),
