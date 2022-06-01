@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_clinic/login_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,14 +15,17 @@ class _HomePageState extends State<HomePage> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Welcome User}'),
+          const Text('Welcome User'),
           const SizedBox(
             height: 30,
           ),
           OutlinedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              },
               icon: const Icon(Icons.exit_to_app, size: 18),
-              label: const Text('logout')),
+              label: const Text('Signout')),
         ],
       )),
     ));

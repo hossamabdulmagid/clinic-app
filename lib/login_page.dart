@@ -141,6 +141,7 @@ class _LoginPageState extends State<LoginPage> {
       "type": "client",
       "clinicId": "6270321a0584c700120df0ae",
     });
+
     if (nameController.text.isNotEmpty || passwordController.text.isNotEmpty) {
       final response = await http.post(
         Uri.parse('https://base.maado.me/api/v1/auth/login'),
@@ -156,8 +157,6 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (response.statusCode == 200) {
-        print('log the body after res = 200');
-
         // ignore: use_build_context_synchronously
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
