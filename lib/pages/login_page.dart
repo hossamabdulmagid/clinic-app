@@ -136,25 +136,25 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   child: Text("Sign In..."),
                 )),
-            Row(
-              // ignore: sort_child_properties_last
-              children: <Widget>[
-                const Text('By clicking "Sign in" you agree to our'),
-                TextButton(
-                  child: const Text(
-                    'Terms of Service',
-                    style: TextStyle(color: Color.fromRGBO(107, 201, 213, 1)),
-                  ),
-                  onPressed: () {
-                    // Navigator.of(context).push(
-                    //     MaterialPageRoute(builder: (BuildContext context) {
-                    //   return TermsPage();
-                    // }));
-                  },
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            ),
+            // Row(
+            //   // ignore: sort_child_properties_last
+            //   children: <Widget>[
+            //     const Text('By clicking "Sign in" you agree to our'),
+            //     TextButton(
+            //       child: const Text(
+            //         'Terms of Service',
+            //         style: TextStyle(color: Color.fromRGBO(107, 201, 213, 1)),
+            //       ),
+            //       onPressed: () {
+            //         // Navigator.of(context).push(
+            //         //     MaterialPageRoute(builder: (BuildContext context) {
+            //         //   return TermsPage();
+            //         // }));
+            //       },
+            //     )
+            //   ],
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            // ),
           ],
         ));
   }
