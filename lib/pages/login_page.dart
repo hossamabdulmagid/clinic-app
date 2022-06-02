@@ -1,13 +1,13 @@
 // ignore: unnecessary_import
 import 'dart:convert';
-import 'dart:io';
+
 // ignore: avoid_web_libraries_in_flutter
 
 import 'package:flutter/material.dart';
-import 'package:my_clinic/home_page.dart';
+import 'package:my_clinic/pages/home_page.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:dio/dio.dart';
+import 'package:my_clinic/pages/forgetpassord_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -97,6 +97,10 @@ class _LoginPageState extends State<LoginPage> {
             TextButton(
               onPressed: () {
                 //forgot password screen
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                  return ForgetPage();
+                }));
               },
               child: const Text('Forgot Password',
                   style: TextStyle(color: Color.fromRGBO(107, 201, 213, 1))),
