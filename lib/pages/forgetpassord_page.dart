@@ -37,6 +37,9 @@ class _ForgetPageState extends State<ForgetPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          const SizedBox(
+            height: 30,
+          ),
           Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10),
@@ -48,11 +51,19 @@ class _ForgetPageState extends State<ForgetPage> {
                     fontSize: 30),
               )),
           Container(
+            alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
             child: TextField(
               controller: email,
               decoration: const InputDecoration(
+                prefixIcon: Icon(
+                  Icons.email,
+                  color: Color.fromRGBO(107, 201, 213, 1),
+                ),
                 enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20.0),
+                  ),
                   borderSide:
                       BorderSide(color: Color.fromRGBO(107, 201, 213, 1)),
                 ),
@@ -67,13 +78,18 @@ class _ForgetPageState extends State<ForgetPage> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
           Container(
+              constraints:
+                  const BoxConstraints.tightFor(width: 380, height: 50),
               height: 50,
-              padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: const Color.fromRGBO(107, 201, 213, 1),
-                  minimumSize: const Size.fromHeight(40),
+                  // minimumSize: const Size.fromHeight(5),
                 ),
                 onPressed: () {
                   Navigator.pop(context,

@@ -58,7 +58,14 @@ class _LoginPageState extends State<LoginPage> {
               child: TextField(
                 controller: nameController,
                 decoration: const InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: Color.fromRGBO(107, 201, 213, 1),
+                  ),
                   enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20.0),
+                    ),
                     borderSide:
                         BorderSide(color: Color.fromRGBO(107, 201, 213, 1)),
                   ),
@@ -79,7 +86,14 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 controller: passwordController,
                 decoration: const InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Color.fromRGBO(107, 201, 213, 1),
+                  ),
                   enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20.0),
+                    ),
                     borderSide:
                         BorderSide(color: Color.fromRGBO(107, 201, 213, 1)),
                   ),
@@ -106,6 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(color: Color.fromRGBO(107, 201, 213, 1))),
             ),
             Container(
+                constraints:
+                    const BoxConstraints.tightFor(width: 370, height: 50),
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
