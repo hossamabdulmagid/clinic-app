@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_clinic/pages/login_page.dart';
 import 'package:my_clinic/pages/home_page.dart';
+import 'package:my_clinic/pages/privacypolicy_page.dart';
+import 'package:my_clinic/pages/refundpolicy_page.dart';
+import 'package:my_clinic/pages/terms_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -14,6 +17,16 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int currentIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+  // ignore: non_constant_identifier_names
+  final Screen = [
+    LoginPage(),
+    PrivacyPolicyPage(),
+    RefundPolicyPage(),
+    TermsPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +37,9 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
             backgroundColor: const Color.fromRGBO(107, 201, 213, 1),
             title: const Center(child: Text(MyApp._title))),
-        body: LoginPage(),
+        body: Center(
+          child: Screen[currentIndex],
+        ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: const Color.fromRGBO(107, 201, 213, 1),
@@ -32,36 +47,40 @@ class _MyAppState extends State<MyApp> {
           items: const [
             BottomNavigationBarItem(
                 activeIcon: Icon(
+                  Icons.home,
+                  color: Color.fromRGBO(107, 201, 213, 1),
+                ),
+                label: 'Home',
+                icon: Icon(
+                  Icons.home,
+                  color: Colors.grey,
+                  size: 22.0,
+                )),
+            BottomNavigationBarItem(
+                activeIcon: Icon(
                   Icons.privacy_tip,
                   color: Color.fromRGBO(107, 201, 213, 1),
                 ),
-                label: 'Terms of Service',
-                icon: Icon(Icons.privacy_tip,
-                    color: Colors.grey,
-                    semanticLabel: "Read Privacy Policy",
-                    size: 22.0)),
+                label: 'Terms',
+                icon: Icon(Icons.privacy_tip, color: Colors.grey, size: 22.0)),
             BottomNavigationBarItem(
                 activeIcon: Icon(
                   Icons.key,
                   color: Color.fromRGBO(107, 201, 213, 1),
                 ),
-                label: 'Refund Policy',
-                icon: Icon(Icons.key,
-                    color: Colors.grey,
-                    semanticLabel: "Read Privacy Policy",
-                    size: 22.0)),
+                label: 'Refund',
+                icon: Icon(Icons.key, color: Colors.grey, size: 22.0)),
             BottomNavigationBarItem(
                 activeIcon: Icon(
                   Icons.privacy_tip_rounded,
                   color: Color.fromRGBO(107, 201, 213, 1),
                 ),
-                label: 'Privacy Policy.',
+                label: 'Privacy',
                 icon: Icon(
                   Icons.privacy_tip_rounded,
                   color: Colors.grey,
                   size: 22.0,
-                  semanticLabel: "Read Privacy Policy",
-                ))
+                )),
           ],
           currentIndex: currentIndex,
           onTap: (int index) {

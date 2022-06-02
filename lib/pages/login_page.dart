@@ -8,6 +8,8 @@ import 'package:my_clinic/pages/home_page.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:my_clinic/pages/forgetpassord_page.dart';
+import 'package:my_clinic/pages/privacypolicy_page.dart';
+import 'package:my_clinic/pages/terms_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -144,7 +146,10 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(color: Color.fromRGBO(107, 201, 213, 1)),
                   ),
                   onPressed: () {
-                    //signup screen
+                    // Navigator.of(context).push(
+                    //     MaterialPageRoute(builder: (BuildContext context) {
+                    //   return TermsPage();
+                    // }));
                   },
                 )
               ],
