@@ -12,24 +12,25 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('Privacy Polic Page'),
-          const SizedBox(
-            height: 30,
-          ),
-          // OutlinedButton.icon(
-          //     onPressed: () {
-          //       // Navigator.pop(context,
-          //       //     MaterialPageRoute(builder: (context) => LoginPage()));
-          //     },
-          //     icon: const Icon(Icons.exit_to_app, size: 18),
-          //     label: const Text('')),
-        ],
-      )),
-    ));
+      body: SafeArea(
+        child: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Privacy Polic Page'),
+            const SizedBox(
+              height: 30,
+            ),
+            // OutlinedButton.icon(
+            //     onPressed: () {
+            //       // Navigator.pop(context,
+            //       //     MaterialPageRoute(builder: (context) => LoginPage()));
+            //     },
+            //     icon: const Icon(Icons.exit_to_app, size: 18),
+            //     label: const Text('')),
+          ],
+        )),
+      ),
+    );
   }
 }

@@ -18,38 +18,35 @@ class ForgetPage extends StatefulWidget {
 }
 
 class _ForgetPageState extends State<ForgetPage> {
-  TextEditingController emailController = TextEditingController();
-
-  String buttonName = 'ResetPassword';
-
-  bool isLoading = false;
-
-  var url = Uri.encodeFull('https://base.maado.me/api/v1/auth/login');
-
-  Map<String, String> headers = {
-    'Content-Type': 'application/json',
-  };
-  final TextEditingController email = new TextEditingController();
-
+  final TextEditingController email = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(107, 201, 213, 1),
+        title: Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           const SizedBox(
-            height: 30,
+            height: 20,
           ),
-          Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: const Text(
-                'Welcome back to clinic',
-                style: TextStyle(
-                    color: Color.fromRGBO(107, 201, 213, 1),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 30),
-              )),
+          // Container(
+          //     alignment: Alignment.center,
+          //     padding: const EdgeInsets.all(10),
+          //     child: const Text(
+          //       'Welcome back to clinic',
+          //       style: TextStyle(
+          //           color: Color.fromRGBO(107, 201, 213, 1),
+          //           fontWeight: FontWeight.w500,
+          //           fontSize: 30),
+          //     )),
+          const SizedBox(
+            height: 20,
+          ),
           Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
