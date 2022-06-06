@@ -48,4 +48,8 @@ class Backend {
   static Future getToken(String key) async {
     return await storage.read(key: key, aOptions: getAndroidOptions());
   }
+
+  static Future deleteToken(String key) async {
+    return await storage.deleteAll();
+  }
 }

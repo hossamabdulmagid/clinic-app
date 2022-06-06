@@ -209,9 +209,22 @@ class _LoginPageState extends State<LoginPage> {
 
       var ValidT = await Backend.getToken('token');
 
-      if (data.isNotEmpty) {
-        Map<String, dynamic> token = jsonDecode(response);
+      // print(data['error']['message']);
 
+      print('response');
+
+      Map<String, dynamic> token = jsonDecode(response);
+
+      print(data);
+      print('data');
+
+      // print(response);
+      // print('response');
+      // print(data['data']['user'].length);
+      // print(data['data'].length);
+      // print('datalength');
+
+      if (data.isNotEmpty) {
         await Backend.storeToken('token', '${token['data']['token']}');
 
         print('token =====');
@@ -243,58 +256,56 @@ class _LoginPageState extends State<LoginPage> {
       var result = await Backend.get('clinic/', ValidT);
 
       result.then((x) => print(x));
-
-      // print(Backend.storage.readAll());
-      // print('Backend.storage.readAll()');
-
-      // print('allValue');
-      // print('target');
-
-      // await Backend.getToken('token');
-
-      // var result = Backend.get('clinic/', await Backend.getToken('token'));
-      // print(result);
-      // print(data.token);
-      // print(json.decode(data.body));
-      // await Backend.storeToken(data.token);
-
-      // var scopeToken = await Backend.getToken();
-
-      // if (scopeToken != null) {
-      //   // token?.value = scopeToken;
-      //   var res = await Backend.get('clinic/', scopeToken);
-      //   print(res);
-      // }
-      // print(scopeToken);
-      // print('scopeToken');
-
-      // if (scopeToken != null) {
-      //   token = scopeToken;
-      //   print(token);
-      //   print('token');
-      //   var response = Backend.get('clinic/', scopeToken);
-      //   print(response);
-      // }
-      // checkLogin();
-      // await NetWorkHandler.getToken('token').then((value) => print(value));
-      // print(response);
-
-      // final response = await http.post(
-      //   Uri.parse('https://base.maado.me/api/v1/auth/login'),
-      //   headers: <String, String>{
-      //     'Content-Type': 'application/json; charset=UTF-8',
-      //   },
-      //   body: jsonEncode(<String, String>{
-      //     "login": login,
-      //     "password": password,
-      //     "type": "client",
-      //     "clinicId": "6270321a0584c700120df0ae",
-      //   }),
-      // );
-
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Empty Field Not Allowed Pleace Get In Touch...')));
     }
+    // print(Backend.storage.readAll());
+    // print('Backend.storage.readAll()');
+
+    // print('allValue');
+    // print('target');
+
+    // await Backend.getToken('token');
+
+    // var result = Backend.get('clinic/', await Backend.getToken('token'));
+    // print(result);
+    // print(data.token);
+    // print(json.decode(data.body));
+    // await Backend.storeToken(data.token);
+
+    // var scopeToken = await Backend.getToken();
+
+    // if (scopeToken != null) {
+    //   // token?.value = scopeToken;
+    //   var res = await Backend.get('clinic/', scopeToken);
+    //   print(res);
+    // }
+    // print(scopeToken);
+    // print('scopeToken');
+
+    // if (scopeToken != null) {
+    //   token = scopeToken;
+    //   print(token);
+    //   print('token');
+    //   var response = Backend.get('clinic/', scopeToken);
+    //   print(response);
+    // }
+    // checkLogin();
+    // await NetWorkHandler.getToken('token').then((value) => print(value));
+    // print(response);
+
+    // final response = await http.post(
+    //   Uri.parse('https://base.maado.me/api/v1/auth/login'),
+    //   headers: <String, String>{
+    //     'Content-Type': 'application/json; charset=UTF-8',
+    //   },
+    //   body: jsonEncode(<String, String>{
+    //     "login": login,
+    //     "password": password,
+    //     "type": "client",
+    //     "clinicId": "6270321a0584c700120df0ae",
+    //   }),
+    // );
   }
 }
