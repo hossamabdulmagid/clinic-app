@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_clinic/pages/login_page.dart';
+import 'package:my_clinic/services/backend.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -21,7 +22,15 @@ class _WelcomeState extends State<Welcome> {
               height: 30,
             ),
             OutlinedButton.icon(
-                onPressed: () {
+                onPressed: () async {
+                  var token = await Backend.getToken('token');
+
+                  print('token is ===');
+                  print(token);
+
+                  var result = await Backend.deleteToken('token');
+                  print(result);
+                  print('result');
                   Navigator.pushNamed(context, '/');
                 },
                 icon: const Icon(Icons.exit_to_app, size: 18),
