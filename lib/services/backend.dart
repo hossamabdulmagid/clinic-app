@@ -22,7 +22,7 @@ class Backend {
     var response = await client.get(buildUrl(endpoint), headers: {
       "Content-Type": "application/json; charset=UTF-8",
       "Accept": "application/json",
-      "authorization": "Bearer $token"
+      "Authorization": "Bearer $token"
     });
     return response.body;
   }
@@ -38,6 +38,10 @@ class Backend {
     String host = 'https://base.maado.me/api/v1/';
     final apiPath = host + endPoint;
     return Uri.parse(apiPath);
+  }
+
+  static Future storeEmail(String key, String email) {
+    return storage.write(key: key, value: email, aOptions: getAndroidOptions());
   }
 
   static Future storeToken(String key, String token) async {

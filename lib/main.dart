@@ -42,8 +42,4 @@ class _MyAppState extends State<MyApp> {
         // },
         );
   }
-
-  Future<void> checkLogin() async {
-    var isLoggedId = await Backend.getToken('token');
-  }
 }
