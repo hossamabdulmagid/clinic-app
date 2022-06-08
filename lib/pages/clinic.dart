@@ -10,7 +10,7 @@ Future<Clinic> getClinic() async {
 
   final response = await Backend.get('clinic/', token);
 
-  if (response.statusCode == 200) {
+  if (response?.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     print(response);
@@ -42,11 +42,10 @@ class Clinic {
 }
 
 /*
-
   "_id": "6270321a0584c700120df0ae",
-            "name": "KIMI clinic",
-            "phone": "+18184419136",
-            "email": "royal@clinic.health",
+  "name": "KIMI clinic",
+  "phone": "+18184419136",
+  "email": "royal@clinic.health",
 */
 class Data {
   final int id;

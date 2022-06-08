@@ -166,30 +166,34 @@ class _LoginPageState extends State<LoginPage> {
                         primary: const Color.fromRGBO(
                             107, 201, 213, 1), // Background color
                       ),
-                      onPressed: () {
-                        Login(nameController.text, passwordController.text);
+                      onPressed: () async {
+                        if (isLoading) {
+                          return;
+                        }
+                        setState(() {
+                          isLoading = true;
+                        });
+                        await Future.delayed(const Duration(seconds: 2));
+                        await Login(
+                            nameController.text, passwordController.text);
                       },
-                      child: Text("Sign In..."),
+                      child: isLoading
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text('Please wait...'),
+                                SizedBox(
+                                  // ignore: sort_child_properties_last
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                  height: 20.0,
+                                  width: 20.0,
+                                ),
+                              ],
+                            )
+                          : const Text("Sign In..."),
                     )),
-                // Row(
-                //   // ignore: sort_child_properties_last
-                //   children: <Widget>[
-                //     const Text('By clicking "Sign in" you agree to our'),
-                //     TextButton(
-                //       child: const Text(
-                //         'Terms of Service',
-                //         style: TextStyle(color: Color.fromRGBO(107, 201, 213, 1)),
-                //       ),
-                //       onPressed: () {
-                //         // Navigator.of(context).push(
-                //         //     MaterialPageRoute(builder: (BuildContext context) {
-                //         //   return TermsPage();
-                //         // }));
-                //       },
-                //     )
-                //   ],
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                // ),
               ],
             )));
   }
