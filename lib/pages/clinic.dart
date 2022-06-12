@@ -1,70 +1,71 @@
-import 'dart:async';
-import 'dart:convert';
+// import 'dart:async';
+// import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:my_clinic/services/backend.dart';
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
+// import 'package:my_clinic/services/backend.dart';
 
-Future<Clinic> getClinic() async {
-  final token = await Backend.getToken('token');
+// Future<Clinic> getClinic() async {
+//   final token = await Backend.getToken('token');
 
-  final response = await Backend.get('clinic/', token);
+//   final response = await Backend.get('clinic/', token);
 
-  if (response?.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    print(response);
-    print('repsone from GetClinic');
-    return Clinic.fromJson(json.decode(response.body?.data));
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
+//   if (response.statusCode == 200) {
+//     // If the server did return a 200 OK response,
+//     // then parse the JSON.
 
-class Clinic {
-  final bool success;
-  final List<Data> data;
+//     var result = Clinic.fromJson(json.decode(response));
 
-  const Clinic({
-    required this.success,
-    required this.data,
-  });
+//     return result;
+//   } else {
+//     // If the server did not return a 200 OK response,
+//     // then throw an exception.
+//     throw Exception('Failed to load album');
+//   }
+// }
 
-  factory Clinic.fromJson(Map<String, dynamic> json) {
-    var list = json['data'] as List;
-    print(list.runtimeType);
-    List<Data> dataList = list.map((i) => Data.fromJson(i)).toList();
+// class Clinic {
+//   final bool success;
+//   final List<Data> data;
 
-    return Clinic(success: json['success'], data: dataList);
-  }
-}
+//   const Clinic({
+//     required this.success,
+//     required this.data,
+//   });
 
-/*
-  "_id": "6270321a0584c700120df0ae",
-  "name": "KIMI clinic",
-  "phone": "+18184419136",
-  "email": "royal@clinic.health",
-*/
-class Data {
-  final int id;
-  final String name;
-  final String phone;
-  final String email;
+//   factory Clinic.fromJson(Map<String, dynamic> json) {
+//     var list = json['data'] as List;
+//     print(list.runtimeType);
+//     List<Data> dataList = list.map((i) => Data.fromJson(i)).toList();
 
-  Data(
-      {required this.id,
-      required this.name,
-      required this.phone,
-      required this.email});
+//     return Clinic(success: json['success'], data: dataList);
+//   }
+// }
 
-  factory Data.fromJson(Map<String, dynamic> parsedJson) {
-    return Data(
-      id: parsedJson['id'],
-      name: parsedJson['name'],
-      phone: parsedJson['phone'],
-      email: parsedJson['email'],
-    );
-  }
-}
+// /*
+//   "_id": "6270321a0584c700120df0ae",
+//   "name": "KIMI clinic",
+//   "phone": "+18184419136",
+//   "email": "royal@clinic.health",
+// */
+// class Data {
+//   final int id;
+//   final String name;
+//   final String phone;
+//   final String email;
+
+//   Data(
+//       {required this.id,
+//       required this.name,
+//       required this.phone,
+//       required this.email});
+
+//   factory Data.fromJson(Map<String, dynamic> parsedJson) {
+//     return Data(
+//       id: parsedJson['id'],
+//       name: parsedJson['name'],
+//       phone: parsedJson['phone'],
+//       email: parsedJson['email'],
+//     );
+//   }
+// }

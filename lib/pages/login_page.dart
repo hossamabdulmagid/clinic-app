@@ -176,6 +176,9 @@ class _LoginPageState extends State<LoginPage> {
                         await Future.delayed(const Duration(seconds: 2));
                         await Login(
                             nameController.text, passwordController.text);
+                        setState(() {
+                          isLoading = false;
+                        });
                       },
                       child: isLoading
                           ? Row(
@@ -213,8 +216,6 @@ class _LoginPageState extends State<LoginPage> {
 
       // print(data['error']['message']);
 
-      print('response');
-
       Map<String, dynamic> token = jsonDecode(response);
 
       if (data.isNotEmpty) {
@@ -222,28 +223,29 @@ class _LoginPageState extends State<LoginPage> {
 
         await Backend.storeEmail('email', '${token['data']['user']['email']}');
 
-        print('token =====');
+        // print('token =====');
 
-        print('your Mail Is, ${token['data']['user']['email']}!');
+        // print('your Mail Is, ${token['data']['user']['email']}!');
 
-        print('We sent the verification link to ${token['data']}.');
+        // print('We sent the verification link to ${token['data']}.');
 
-        print('result');
+        // print('result');
 
-        print('token from flutter secure storage');
+        // print('token from flutter secure storage');
 
-        print(await Backend.getToken('token'));
+        // print(await Backend.getToken('token'));
 
-        print('email from flutter secure storage');
+        // print('email from flutter secure storage');
 
-        print(await Backend.getToken('email'));
-
-        // ignore: use_build_context_synchronously
-
-        print(data);
+        // print(await Backend.getToken('email'));
 
         // ignore: use_build_context_synchronously
 
+        // print(data);
+
+        // ignore: use_build_context_synchronously
+
+        // ignore: use_build_context_synchronously
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
       } else {

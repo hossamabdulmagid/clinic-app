@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:my_clinic/pages/clinic.dart';
 import 'package:my_clinic/pages/login_page.dart';
@@ -10,75 +12,91 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
-  late Future<Clinic> futureClinic;
+  List? datax;
+  late bool Loading = true;
 
   @override
   void initState() {
     super.initState();
-    futureClinic = getClinic();
+    getSWData().whenComplete(() => {
+          setState(() => {Loading = false})
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('You Are Welcome'),
-            const SizedBox(
-              height: 30,
-            ),
-            FutureBuilder<Clinic>(
-                future: futureClinic,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<Map<String, dynamic>> data =
-                        snapshot.data as List<Map<String, dynamic>>;
-                    return ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Text("${data[index]["name"]}");
-                        });
-                  } else if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }),
-            // FutureBuilder<Clinic>(
-            //   future: futureClinic,
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasData) {
-            //       return Text(snapshot.data!.name);
-            //     } else if (snapshot.hasError) {
-            //       return Text('${snapshot.error}');
-            //     }
+      body: ListView.builder(
+          // ignore: unnecessary_null_comparison
+          itemCount: datax == null ? 0 : datax?.length,
+          // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
+          itemBuilder: (BuildContext context, int index) {
+            return Center(
+                child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Card(
+                  // ignore: avoid_unnecessary_containers
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(26.0),
+                    child: Text(datax?[index]['name'],
+                        style:
+                            TextStyle(fontSize: 18.0, color: Colors.black38)),
+                  ),
+                ),
+                Card(
+                  // ignore: avoid_unnecessary_containers
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(26.0),
+                    child: Text(datax?[index]['email'],
+                        style:
+                            TextStyle(fontSize: 18.0, color: Colors.black38)),
+                  ),
+                ),
+                Card(
+                  // ignore: avoid_unnecessary_containers
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(26.0),
+                    child: Text(datax?[index]['phone'],
+                        style:
+                            TextStyle(fontSize: 18.0, color: Colors.black38)),
+                  ),
+                ),
+                OutlinedButton.icon(
+                    onPressed: () async {
+                      var token = await Backend.getToken('token');
 
-            //     // By default, show a loading spinner.
-            //     return const CircularProgressIndicator();
-            //   },
-            // ),
-            OutlinedButton.icon(
-                onPressed: () async {
-                  var token = await Backend.getToken('token');
+                      print('token is ===');
+                      print(token);
 
-                  print('token is ===');
-                  print(token);
-
-                  var result = await Backend.deleteToken('token');
-                  print(result);
-                  print('result');
-                  Navigator.pushNamed(context, '/');
-                },
-                icon: const Icon(Icons.exit_to_app, size: 18),
-                label: const Text('Signout')),
-          ],
-        )),
-      ),
+                      var result = await Backend.deleteToken('token');
+                      print(result);
+                      print('result');
+                      Navigator.pushNamed(context, '/');
+                    },
+                    icon: const Icon(Icons.exit_to_app, size: 18),
+                    label: const Text('Signout')),
+                // Center(
+                //   child: CircularProgressIndicator(),
+                // ),
+              ],
+            ));
+          }),
     );
+  }
+
+  Future<String> getSWData() async {
+    var token = await Backend.getToken('token');
+    var res = await Backend.get('clinic/', token);
+
+    setState(() {
+      dynamic resBody = json.decode(res);
+      datax = resBody['data'];
+    });
+    return 'Success!';
   }
 }

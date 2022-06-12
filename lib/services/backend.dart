@@ -18,20 +18,29 @@ class Backend {
   //   accountName: _getAccountName(),
   // );
 
-  static Future get(String endpoint, String token) async {
+  static get(String endpoint, String token) async {
     var response = await client.get(buildUrl(endpoint), headers: {
       "Content-Type": "application/json; charset=UTF-8",
       "Accept": "application/json",
       "Authorization": "Bearer $token"
     });
-    return response.body;
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return response;
+    }
   }
 
   static Future post(body, String endpoint) async {
     var response = await client.post(buildUrl(endpoint),
         body: body,
         headers: {'Content-Type': 'application/json; charset=UTF-8'});
-    return response.body;
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return response;
+    }
   }
 
   static Uri buildUrl(String endPoint) {
