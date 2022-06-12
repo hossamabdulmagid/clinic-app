@@ -18,7 +18,7 @@ class _WelcomeState extends State<Welcome> {
   @override
   void initState() {
     super.initState();
-    getSWData().whenComplete(() => {
+    getClinic().whenComplete(() => {
           setState(() => {Loading = false})
         });
   }
@@ -40,56 +40,61 @@ class _WelcomeState extends State<Welcome> {
                   // ignore: avoid_unnecessary_containers
                   child: Container(
                     alignment: Alignment.center,
-                    padding: EdgeInsets.all(26.0),
+                    padding: const EdgeInsets.all(26.0),
                     child: Text(datax?[index]['name'],
-                        style:
-                            TextStyle(fontSize: 18.0, color: Colors.black38)),
+                        style: const TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black38,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ),
                 Card(
                   // ignore: avoid_unnecessary_containers
                   child: Container(
                     alignment: Alignment.center,
-                    padding: EdgeInsets.all(26.0),
+                    padding: const EdgeInsets.all(26.0),
                     child: Text(datax?[index]['email'],
-                        style:
-                            TextStyle(fontSize: 18.0, color: Colors.black38)),
+                        style: const TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black38,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ),
                 Card(
                   // ignore: avoid_unnecessary_containers
                   child: Container(
                     alignment: Alignment.center,
-                    padding: EdgeInsets.all(26.0),
+                    padding: const EdgeInsets.all(26.0),
                     child: Text(datax?[index]['phone'],
-                        style:
-                            TextStyle(fontSize: 18.0, color: Colors.black38)),
+                        style: const TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black38,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ),
                 OutlinedButton.icon(
                     onPressed: () async {
                       var token = await Backend.getToken('token');
-
                       print('token is ===');
                       print(token);
 
                       var result = await Backend.deleteToken('token');
                       print(result);
+
                       print('result');
+
+                      // ignore: use_build_context_synchronously
                       Navigator.pushNamed(context, '/');
                     },
                     icon: const Icon(Icons.exit_to_app, size: 18),
                     label: const Text('Signout')),
-                // Center(
-                //   child: CircularProgressIndicator(),
-                // ),
               ],
             ));
           }),
     );
   }
 
-  Future<String> getSWData() async {
+  Future<String> getClinic() async {
     var token = await Backend.getToken('token');
     var res = await Backend.get('clinic/', token);
 
@@ -97,6 +102,7 @@ class _WelcomeState extends State<Welcome> {
       dynamic resBody = json.decode(res);
       datax = resBody['data'];
     });
+
     return 'Success!';
   }
 }

@@ -18,28 +18,6 @@ class LoginPage extends StatefulWidget {
   String? token;
 
   @override
-  // void onInit() {
-  //   // super.onInit();
-  //   checkLogin();
-  // }
-
-  // void checkLogin() async {
-  //   var scopeToken = await Backend.getToken();
-  //   print(scopeToken);
-  //   print('scopeToken');
-  //   var response = Backend.get('clinic/', scopeToken);
-  //   print(response);
-
-  //   if (scopeToken != null) {
-  //     token = scopeToken;
-  //     print(token);
-  //     print('token');
-  //     var response = Backend.get('clinic/', scopeToken);
-  //     print(response);
-  //   }
-  // }
-
-  // ignore: library_private_types_in_public_api
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -51,11 +29,6 @@ class _LoginPageState extends State<LoginPage> {
   String buttonName = 'Sign In...';
 
   bool isLoading = false;
-
-  var url = Uri.encodeFull('https://base.maado.me/api/v1/auth/login');
-  Map<String, String> headers = {
-    'Content-Type': 'application/json',
-  };
 
   static const storage = FlutterSecureStorage();
 
