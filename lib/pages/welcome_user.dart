@@ -13,6 +13,7 @@ class Welcome extends StatefulWidget {
 
 class _WelcomeState extends State<Welcome> {
   List? datax;
+  List? validAppointments;
   late bool Loading = true;
   String? name;
 
@@ -20,78 +21,83 @@ class _WelcomeState extends State<Welcome> {
   void initState() {
     super.initState();
     getClinic();
+    GetAppointments();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-          // ignore: unnecessary_null_comparison
-          itemCount: datax == null ? 0 : datax?.length,
-          // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
-          itemBuilder: (BuildContext context, int index) {
-            return Center(
-                child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: (validAppointments?.isEmpty ?? true)
+          ? Center(
+              child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Card(
-                  // ignore: avoid_unnecessary_containers
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(26.0),
-                    child: Text(datax?[index]['name'],
-                        style: const TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.black38,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                Card(
-                  // ignore: avoid_unnecessary_containers
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(26.0),
-                    child: Text(datax?[index]['email'],
-                        style: const TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.black38,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                Card(
-                  // ignore: avoid_unnecessary_containers
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(26.0),
-                    child: Text(datax?[index]['phone'],
-                        style: const TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.black38,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
+                const Text('Dont have valid Appointments',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black38,
+                        fontWeight: FontWeight.bold)),
                 OutlinedButton.icon(
                     onPressed: () async {
                       var token = await Backend.getToken('token');
                       print('token is ===');
                       print(token);
-
                       var result = await Backend.deleteToken('token');
                       var target = await Backend.deleteToken('fullName');
-
                       print(result);
-
                       print('result');
-
                       // ignore: use_build_context_synchronously
                       Navigator.pushNamed(context, '/');
                     },
                     icon: const Icon(Icons.exit_to_app, size: 18),
                     label: const Text('Signout')),
               ],
-            ));
-          }),
+            ))
+          : ListView.builder(
+              // ignore: unnecessary_null_comparison
+              itemCount:
+                  validAppointments == null ? 0 : validAppointments?.length,
+              // scrollDirection: Axis.vertical,
+
+              // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 0) {
+                  return OutlinedButton.icon(
+                      onPressed: () async {
+                        var token = await Backend.getToken('token');
+                        var result = await Backend.deleteToken('token');
+                        var target = await Backend.deleteToken('fullName');
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushNamed(context, '/');
+                      },
+                      icon: const Icon(Icons.exit_to_app, size: 18),
+                      label: const Text('Signout'));
+                }
+                return Center(
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Card(
+                        // ignore: avoid_unnecessary_containers
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(26.0),
+                          child: Text(
+                              'Doctor: ${validAppointments?[index]['doctorName']}'
+                              ' \n'
+                              'startDate: ${validAppointments?[index]['startDate'] + ' \n' 'endDate: ${validAppointments?[index]['endDate']}'}',
+                              style: const TextStyle(
+                                  fontSize: 15.0,
+                                  color: Colors.black38,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
     );
   }
 
@@ -103,7 +109,18 @@ class _WelcomeState extends State<Welcome> {
       dynamic resBody = json.decode(res);
       datax = resBody['data'];
     });
+    return 'Success!';
+  }
 
+  Future<String> GetAppointments() async {
+    var token = await Backend.getToken('token');
+    var res = await Backend.get('clinic/my-appointments', token);
+
+    setState(() {
+      dynamic resBody = json.decode(res);
+      validAppointments = resBody['data'];
+      print('validAppointments $validAppointments');
+    });
     return 'Success!';
   }
 }
