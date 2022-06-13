@@ -1,4 +1,5 @@
 // ignore: file_names
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 
@@ -37,9 +38,11 @@ class Backend {
         body: body,
         headers: {'Content-Type': 'application/json; charset=UTF-8'});
     if (response.statusCode == 200) {
-      return response.body;
+      var target = json.decode(response.body);
+      return target;
     } else {
-      return response;
+      var result = response.body;
+      return json.decode(result);
     }
   }
 
@@ -49,8 +52,9 @@ class Backend {
     return Uri.parse(apiPath);
   }
 
-  static Future storeEmail(String key, String email) {
-    return storage.write(key: key, value: email, aOptions: getAndroidOptions());
+  static Future storeEmail(String key, String fullName) {
+    return storage.write(
+        key: key, value: fullName, aOptions: getAndroidOptions());
   }
 
   static Future storeToken(String key, String token) async {

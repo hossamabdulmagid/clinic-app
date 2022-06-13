@@ -181,50 +181,35 @@ class _LoginPageState extends State<LoginPage> {
       "type": "client",
       "clinicId": "6270321a0584c700120df0ae",
     });
+
     // Backend.storage.deleteAll();
+
     if (nameController.text.isNotEmpty || passwordController.text.isNotEmpty) {
       var response = await Backend.post(body, "auth/login");
 
-      var data = json.decode(response);
+      // var data = json.decode(response);
 
-      // print(data['error']['message']);
+      // Map<String, dynamic> token = jsonDecode(response);
 
-      Map<String, dynamic> token = jsonDecode(response);
-
-      if (data.isNotEmpty) {
-        await Backend.storeToken('token', '${token['data']['token']}');
-
-        await Backend.storeEmail('email', '${token['data']['user']['email']}');
-
-        // print('token =====');
-
-        // print('your Mail Is, ${token['data']['user']['email']}!');
-
-        // print('We sent the verification link to ${token['data']}.');
-
-        // print('result');
-
-        // print('token from flutter secure storage');
-
-        // print(await Backend.getToken('token'));
-
-        // print('email from flutter secure storage');
-
-        // print(await Backend.getToken('email'));
-
+      if (response['error'] != null) {
+        print('respone $response');
         // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${response?['error']['message']}')));
+      } else if (response['data'] != null) {
+        await Backend.storeToken('token', '${response['data']['token']}');
 
-        // print(data);
+        await Backend.storeEmail(
+            'fullName',
+            '${response['data']['user']['firstName']}'
+                ' '
+                '${response['data']['user']['lastName']}');
 
-        // ignore: use_build_context_synchronously
+        var target = await Backend.getToken('fullName');
 
         // ignore: use_build_context_synchronously
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
-      } else {
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Invalid Credenialse...')));
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

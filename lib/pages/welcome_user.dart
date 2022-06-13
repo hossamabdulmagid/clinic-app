@@ -14,13 +14,12 @@ class Welcome extends StatefulWidget {
 class _WelcomeState extends State<Welcome> {
   List? datax;
   late bool Loading = true;
+  String? name;
 
   @override
   void initState() {
     super.initState();
-    getClinic().whenComplete(() => {
-          setState(() => {Loading = false})
-        });
+    getClinic();
   }
 
   @override
@@ -79,6 +78,8 @@ class _WelcomeState extends State<Welcome> {
                       print(token);
 
                       var result = await Backend.deleteToken('token');
+                      var target = await Backend.deleteToken('fullName');
+
                       print(result);
 
                       print('result');
