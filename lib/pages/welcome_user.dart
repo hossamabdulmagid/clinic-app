@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:my_clinic/pages/clinic.dart';
 import 'package:my_clinic/pages/login_page.dart';
 import 'package:my_clinic/services/backend.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:simple_moment/simple_moment.dart';
+import 'package:intl/intl.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -86,7 +89,7 @@ class _WelcomeState extends State<Welcome> {
                           child: Text(
                               'Doctor: ${validAppointments?[index]['doctorName']}'
                               ' \n'
-                              'startDate: ${validAppointments?[index]['startDate'] + ' \n' 'endDate: ${validAppointments?[index]['endDate']}'}',
+                              'startDate: ${validAppointments?[index]['startDate'] + ' \n'}',
                               style: const TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.black38,
