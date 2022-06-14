@@ -16,9 +16,9 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
         child: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Privacy Polic Page'),
-            const SizedBox(
+          children: const [
+            Text('Privacy Polic Page'),
+            SizedBox(
               height: 30,
             ),
             // OutlinedButton.icon(

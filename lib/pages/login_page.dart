@@ -182,14 +182,8 @@ class _LoginPageState extends State<LoginPage> {
       "clinicId": "6270321a0584c700120df0ae",
     });
 
-    // Backend.storage.deleteAll();
-
     if (nameController.text.isNotEmpty || passwordController.text.isNotEmpty) {
       var response = await Backend.post(body, "auth/login");
-
-      // var data = json.decode(response);
-
-      // Map<String, dynamic> token = jsonDecode(response);
 
       if (response['error'] != null) {
         print('respone $response');

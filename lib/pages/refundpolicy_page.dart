@@ -15,9 +15,9 @@ class _RefundPolicyPageState extends State<RefundPolicyPage> {
         child: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Refund Policy'),
-            const SizedBox(
+          children: const [
+            Text('Refund Policy'),
+            SizedBox(
               height: 30,
             ),
             // OutlinedButton.icon(

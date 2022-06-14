@@ -15,9 +15,9 @@ class _TermsPageState extends State<TermsPage> {
         child: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Terms Of Services'),
-            const SizedBox(
+          children: const [
+            Text('Terms Of Services'),
+            SizedBox(
               height: 30,
             ),
             // OutlinedButton.icon(

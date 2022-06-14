@@ -20,11 +20,11 @@ class _WelcomeState extends State<Welcome> {
   late bool Loading = true;
   String? name;
 
-  String utcTo12HourFormatToLocal(String bigTime) {
+  String utcTo12HourFormatToLocal(String utcTime) {
     var dateFormat =
-        DateFormat("dd-MM-yyyy hh:mm aa"); // you can change the format here
+        DateFormat("dd/MM/yyyy hh:mm aa"); // you can change the format here
     var utcDate =
-        dateFormat.format(DateTime.parse(bigTime)); // pass the UTC time here
+        dateFormat.format(DateTime.parse(utcTime)); // pass the UTC time here
     var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
     String startDate =
         dateFormat.format(DateTime.parse(localDate)); // you will local time
@@ -129,13 +129,11 @@ class _WelcomeState extends State<Welcome> {
   Future<String> GetAppointments() async {
     var token = await Backend.getToken('token');
     var res = await Backend.get('clinic/my-appointments', token);
-
     setState(() {
       dynamic resBody = json.decode(res);
       validAppointments = resBody['data'];
       print('validAppointments $validAppointments');
     });
-
     return 'Success!';
   }
 }
