@@ -19,7 +19,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // ignore: non_constant_identifier_names
-  var isLoggedIs;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

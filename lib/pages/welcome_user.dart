@@ -20,6 +20,17 @@ class _WelcomeState extends State<Welcome> {
   late bool Loading = true;
   String? name;
 
+  String utcTo12HourFormatToLocal(String bigTime) {
+    var dateFormat =
+        DateFormat("dd-MM-yyyy hh:mm aa"); // you can change the format here
+    var utcDate =
+        dateFormat.format(DateTime.parse(bigTime)); // pass the UTC time here
+    var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
+    String startDate =
+        dateFormat.format(DateTime.parse(localDate)); // you will local time
+    return startDate;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -64,18 +75,18 @@ class _WelcomeState extends State<Welcome> {
 
               // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
               itemBuilder: (BuildContext context, int index) {
-                if (index == 0) {
-                  return OutlinedButton.icon(
-                      onPressed: () async {
-                        var token = await Backend.getToken('token');
-                        var result = await Backend.deleteToken('token');
-                        var target = await Backend.deleteToken('fullName');
-                        // ignore: use_build_context_synchronously
-                        Navigator.pushNamed(context, '/');
-                      },
-                      icon: const Icon(Icons.exit_to_app, size: 18),
-                      label: const Text('Signout'));
-                }
+                // if (index == 0) {
+                //   return OutlinedButton.icon(
+                //       onPressed: () async {
+                //         var token = await Backend.getToken('token');
+                //         var result = await Backend.deleteToken('token');
+                //         var target = await Backend.deleteToken('fullName');
+                //         // ignore: use_build_context_synchronously
+                //         Navigator.pushNamed(context, '/');
+                //       },
+                //       icon: const Icon(Icons.exit_to_app, size: 18),
+                //       label: const Text('Signout'));
+                // }
                 return Center(
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,9 +98,9 @@ class _WelcomeState extends State<Welcome> {
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(26.0),
                           child: Text(
-                              'Doctor: ${validAppointments?[index]['doctorName']}'
+                              'Doctor:- ${validAppointments?[index]['doctorName']}'
                               ' \n'
-                              'startDate: ${validAppointments?[index]['startDate'] + ' \n'}',
+                              'startDate:- ${utcTo12HourFormatToLocal(validAppointments?[index]['startDate'])}',
                               style: const TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.black38,
@@ -124,6 +135,7 @@ class _WelcomeState extends State<Welcome> {
       validAppointments = resBody['data'];
       print('validAppointments $validAppointments');
     });
+
     return 'Success!';
   }
 }
