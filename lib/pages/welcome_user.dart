@@ -95,6 +95,10 @@ class _WelcomeState extends State<Welcome> {
                       Card(
                         // ignore: avoid_unnecessary_containers
                         child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: Color(0xffdddddd),
+                          ),
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(26.0),
                           child: Text(
@@ -102,9 +106,10 @@ class _WelcomeState extends State<Welcome> {
                               ' \n'
                               'startDate:- ${utcTo12HourFormatToLocal(validAppointments?[index]['startDate'])}',
                               style: const TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.black38,
-                                  fontWeight: FontWeight.bold)),
+                                fontSize: 15.0,
+                                color: Colors.black45,
+                                fontWeight: FontWeight.bold,
+                              )),
                         ),
                       ),
                     ],
