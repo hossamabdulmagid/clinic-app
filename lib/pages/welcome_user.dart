@@ -45,26 +45,12 @@ class _WelcomeState extends State<Welcome> {
           ? Center(
               child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text('Dont have valid Appointments',
+              children: const <Widget>[
+                Text('Dont have valid Appointments',
                     style: TextStyle(
                         fontSize: 20.0,
                         color: Colors.black38,
                         fontWeight: FontWeight.bold)),
-                OutlinedButton.icon(
-                    onPressed: () async {
-                      var token = await Backend.getToken('token');
-                      print('token is ===');
-                      print(token);
-                      var result = await Backend.deleteToken('token');
-                      var target = await Backend.deleteToken('fullName');
-                      print(result);
-                      print('result');
-                      // ignore: use_build_context_synchronously
-                      Navigator.pushNamed(context, '/');
-                    },
-                    icon: const Icon(Icons.exit_to_app, size: 18),
-                    label: const Text('Signout')),
               ],
             ))
           : ListView.builder(
@@ -75,18 +61,6 @@ class _WelcomeState extends State<Welcome> {
 
               // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
               itemBuilder: (BuildContext context, int index) {
-                // if (index == 0) {
-                //   return OutlinedButton.icon(
-                //       onPressed: () async {
-                //         var token = await Backend.getToken('token');
-                //         var result = await Backend.deleteToken('token');
-                //         var target = await Backend.deleteToken('fullName');
-                //         // ignore: use_build_context_synchronously
-                //         Navigator.pushNamed(context, '/');
-                //       },
-                //       icon: const Icon(Icons.exit_to_app, size: 18),
-                //       label: const Text('Signout'));
-                // }
                 return Center(
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -133,6 +107,7 @@ class _WelcomeState extends State<Welcome> {
     return 'Success!';
   }
 
+  // ignore: non_constant_identifier_names
   Future<String> GetAppointments() async {
     var token = await Backend.getToken('token');
     var res = await Backend.get('clinic/my-appointments', token);
