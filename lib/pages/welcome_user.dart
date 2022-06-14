@@ -104,7 +104,9 @@ class _WelcomeState extends State<Welcome> {
                           child: Text(
                               'Doctor:- ${validAppointments?[index]['doctorName']}'
                               ' \n'
-                              'startDate:- ${utcTo12HourFormatToLocal(validAppointments?[index]['startDate'])}',
+                              'start:- ${utcTo12HourFormatToLocal(validAppointments?[index]['startDate'])}'
+                              ' \n'
+                              'end:- ${utcTo12HourFormatToLocal(validAppointments?[index]['endDate'])}',
                               style: const TextStyle(
                                 fontSize: 15.0,
                                 color: Colors.black45,
