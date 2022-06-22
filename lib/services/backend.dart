@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-class Backend {
+abstract class Backend {
   static final client = http.Client();
 
   static final storage = FlutterSecureStorage();

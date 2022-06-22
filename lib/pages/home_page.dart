@@ -102,6 +102,7 @@ class _HomePageState extends State<HomePage> {
               print(fullName);
               var result = await Backend.deleteToken('token');
               var target = await Backend.deleteToken('fullName');
+
               print(result);
               print('result');
               // ignore: use_build_context_synchronously

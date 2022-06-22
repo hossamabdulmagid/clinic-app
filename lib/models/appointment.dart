@@ -1,9 +1,11 @@
 class Appointment {
+  bool? success;
   List<Data>? data;
 
-  Appointment({this.data});
+  Appointment({this.success, this.data});
 
   Appointment.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
@@ -14,6 +16,7 @@ class Appointment {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -22,36 +25,37 @@ class Appointment {
 }
 
 class Data {
-  String? sId;
-  String? doctorName;
-  String? startDate;
-  String? doctorId;
-  String? patientId;
-  String? patientName;
-  String? emailReminder;
-  String? textReminder;
-  String? followUpMessage;
-  String? status;
-  String? access;
-  String? endDate;
-  String? createdBy;
-  String? createdByName;
-  String? clinicId;
+  dynamic sId;
+  dynamic doctorName;
+  dynamic startDate;
+  dynamic endDate;
+  dynamic doctorId;
+  dynamic patientId;
+  dynamic patientName;
+  dynamic emailReminder;
+  dynamic textReminder;
+  dynamic followUpMessage;
+  dynamic status;
+  dynamic access;
+  dynamic endDatex;
+  dynamic createdBy;
+  dynamic createdByName;
+  dynamic clinicId;
   int? secretKey;
-  dynamic emailReminderSent;
-  String? emailReminderToBeSentAt;
-  dynamic textReminderSent;
-  String? textReminderToBeSentAt;
+  bool? emailReminderSent;
+  dynamic emailReminderToBeSentAt;
+  bool? textReminderSent;
+  dynamic textReminderToBeSentAt;
   int? createdAt;
-  dynamic hasEnded;
-  String? endDatex;
-  String? updatedBy;
-  String? updatedByName;
+  bool? hasEnded;
+  dynamic updatedBy;
+  dynamic updatedByName;
 
   Data(
       {this.sId,
       this.doctorName,
       this.startDate,
+      this.endDate,
       this.doctorId,
       this.patientId,
       this.patientName,
@@ -60,7 +64,7 @@ class Data {
       this.followUpMessage,
       this.status,
       this.access,
-      this.endDate,
+      this.endDatex,
       this.createdBy,
       this.createdByName,
       this.clinicId,
@@ -71,7 +75,6 @@ class Data {
       this.textReminderToBeSentAt,
       this.createdAt,
       this.hasEnded,
-      this.endDatex,
       this.updatedBy,
       this.updatedByName});
 
@@ -79,6 +82,7 @@ class Data {
     sId = json['_id'];
     doctorName = json['doctorName'];
     startDate = json['startDate'];
+    endDate = json['endDate'];
     doctorId = json['doctorId'];
     patientId = json['patientId'];
     patientName = json['patientName'];
@@ -87,7 +91,7 @@ class Data {
     followUpMessage = json['followUpMessage'];
     status = json['status'];
     access = json['access'];
-    endDate = json['EndDate'];
+    endDatex = json['EndDate'];
     createdBy = json['createdBy'];
     createdByName = json['createdByName'];
     clinicId = json['clinicId'];
@@ -98,17 +102,16 @@ class Data {
     textReminderToBeSentAt = json['textReminderToBeSentAt'];
     createdAt = json['createdAt'];
     hasEnded = json['hasEnded'];
-    endDatex = json['endDatex'];
     updatedBy = json['updatedBy'];
     updatedByName = json['updatedByName'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-
     data['_id'] = this.sId;
     data['doctorName'] = this.doctorName;
     data['startDate'] = this.startDate;
+    data['endDate'] = this.endDate;
     data['doctorId'] = this.doctorId;
     data['patientId'] = this.patientId;
     data['patientName'] = this.patientName;
@@ -117,7 +120,7 @@ class Data {
     data['followUpMessage'] = this.followUpMessage;
     data['status'] = this.status;
     data['access'] = this.access;
-    data['EndDate'] = this.endDate;
+    data['EndDate'] = this.endDatex;
     data['createdBy'] = this.createdBy;
     data['createdByName'] = this.createdByName;
     data['clinicId'] = this.clinicId;
@@ -128,7 +131,6 @@ class Data {
     data['textReminderToBeSentAt'] = this.textReminderToBeSentAt;
     data['createdAt'] = this.createdAt;
     data['hasEnded'] = this.hasEnded;
-    data['endDate'] = this.endDatex;
     data['updatedBy'] = this.updatedBy;
     data['updatedByName'] = this.updatedByName;
     return data;

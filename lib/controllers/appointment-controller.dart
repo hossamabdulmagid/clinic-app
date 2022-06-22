@@ -20,22 +20,13 @@ class AppointmentControllers extends GetxController {
 
       var result = jsonDecode(res);
 
-      // isLoading(true);
+      Appointments_list = Appointment.fromJson(result);
 
-      print(result);
-
-      print('result');
-
-      Appointments_list = Appointment.fromJson(res);
-
-      print('Appointments_list $Appointments_list');
+      isLoading(true);
     } catch (err) {
       print('err while getting data $err');
     } finally {
-      // isLoading(false);
+      isLoading(false);
     }
-    print('Appointments => $Appointments_list');
-
-    print('validAppointments ${Appointments_list}');
   }
 }

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_clinic/pages/login_page.dart';
 import 'package:my_clinic/pages/home_page.dart';
-import 'package:my_clinic/pages/privacypolicy_page.dart';
-import 'package:my_clinic/pages/refundpolicy_page.dart';
-import 'package:my_clinic/pages/terms_page.dart';
-import 'package:my_clinic/services/backend.dart';
-import 'package:my_clinic/services/private-route.dart';
+// import 'package:my_clinic/pages/privacypolicy_page.dart';
+// import 'package:my_clinic/pages/refundpolicy_page.dart';
+// import 'package:my_clinic/pages/terms_page.dart';
+// import 'package:my_clinic/services/backend.dart';
 
 void main() => runApp(const MyApp());
 
@@ -29,27 +28,8 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => LoginPage()),
-        GetPage(name: '/privacy-policy', page: () => PrivacyPolicyPage()),
-        GetPage(name: '/refund-policy', page: () => RefundPolicyPage()),
-        GetPage(name: '/terms', page: () => TermsPage()),
         GetPage(name: '/home', page: () => HomePage())
       ],
-      // routes: ConditionalRouter(public: {
-      //   '/': (context) => LoginPage()
-      // }, private: {
-      //   '/privacy-policy': (context) => PrivacyPolicyPage(),
-      //   '/refund-policy': (context) => RefundPolicyPage(),
-      //   '/terms': (context) => TermsPage(),
-      //   '/home': (context) => HomePage()
-      // })
-      // routes: {
-      //   '/': (context) => LoginPage(),
-      //   '/privacy-policy': (context) => PrivacyPolicyPage(),
-      //   '/refund-policy': (context) => RefundPolicyPage(),
-      //   '/terms': (context) => TermsPage(),
-      //   '/home': (context) => HomePage()
-      // },
     );
-    // noSuchMethodError class 'String' has no Instance getter StatusCode
   }
 }

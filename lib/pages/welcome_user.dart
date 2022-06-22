@@ -52,76 +52,49 @@ class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Obx(() => appointmentcontrollers.isLoading.isTrue
-                ? Center(
-                    child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const <Widget>[
-                      Text('Dont have valid Appointments',
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.black38,
-                              fontWeight: FontWeight.bold)),
-                    ],
-                  ))
-                :
-                // ignore: unnecessary_null_comparison
-                // scrollDirection: Axis.vertical,
-
-                // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
-                ListView.builder(
-                    itemBuilder: (ctx, index) {
-                      String doctorName = '';
-                      String startDate = '';
-                      try {
-                        doctorName = appointmentcontrollers
-                            .Appointments_list!.data![index].doctorName!;
-                      } catch (err) {
-                        doctorName = '';
-                      }
-                      return Center(
-                        // ignore: avoid_unnecessary_containers
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: const Color(0xffdddddd),
-                          ),
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(26.0),
-                          child: Text(
-                              'Doctor:- ${appointmentcontrollers.Appointments_list?.data?[index].doctorName}'
-                              ' \n'
-                              // 'start:- ${utcTo12HourFormatToLocal(singleAppointment.Appointments[index].startDate.toString())}'
-                              // ' \n'
-                              // 'end:- ${utcTo12HourFormatToLocal(singleAppointment.Appointments[index].endDate.toString())}',
-                              ,
-                              style: const TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black45,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                      );
-                    },
-                    itemCount: appointmentcontrollers.isLoading.isTrue
-                        ? appointmentcontrollers.Appointments_list!.data!.length
-                        : 0)
-            // Center(
-            //     child: Column(
-            //       // crossAxisAlignment: CrossAxisAlignment.stretch,
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: [
-            //         Container(
-            //             width: double.infinity,
-            //             child: GetX<AppointmentControllers>(
-            //               builder: (singleAppointment) {
-
-            //               },
-            //             ))
-            //       ],
-            //     ),
-            //   ),
-            ));
+      body: Obx(
+        () => appointmentcontrollers.isLoading.isTrue
+            ? Center(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  Text('Dont have valid Appointments',
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black38,
+                          fontWeight: FontWeight.bold)),
+                ],
+              ))
+            : ListView.builder(
+                itemBuilder: (context, index) {
+                  return Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: const Color(0xffdddddd),
+                      ),
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(26.0),
+                      child: Text(
+                          'Doctor:- ${appointmentcontrollers.Appointments_list?.data?[index].doctorName}'
+                          ' \n'
+                          'start:- ${utcTo12HourFormatToLocal(appointmentcontrollers.Appointments_list?.data?[index].startDate)}'
+                          ' \n'
+                          'end:- ${utcTo12HourFormatToLocal(appointmentcontrollers.Appointments_list?.data?[index].endDate)}',
+                          style: const TextStyle(
+                            fontSize: 15.0,
+                            color: Colors.black45,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
+                  );
+                },
+                itemCount: appointmentcontrollers.Appointments_list?.data ==
+                        null
+                    ? 0
+                    : appointmentcontrollers.Appointments_list?.data?.length),
+      ),
+    );
   }
 
   Future<String> getClinic() async {
@@ -134,17 +107,4 @@ class _WelcomeState extends State<Welcome> {
     });
     return 'Success!';
   }
-
-  // ignore: non_constant_identifier_names
-  // Future<String> GetAppointments() async {
-  //   var token = await Backend.getToken('token');
-  //   var res = await Backend.get('clinic/my-appointments', token);
-  //   setState(() {
-  //     dynamic resBody = json.decode(res);
-  //     validAppointments = resBody['data'];
-  //     print('validAppointments $validAppointments');
-  //   });
-  //   return 'Success!';
-  // }
-
 }
