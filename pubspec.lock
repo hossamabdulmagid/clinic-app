@@ -142,27 +142,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  get_core:
-    dependency: transitive
-    description:
-      name: get_core
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.13.0"
-  get_instance:
-    dependency: transitive
-    description:
-      name: get_instance
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.13.0"
-  get_rx:
+  get:
     dependency: "direct main"
     description:
-      name: get_rx
+      name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.13.0"
+    version: "4.6.5"
   http:
     dependency: "direct main"
     description:

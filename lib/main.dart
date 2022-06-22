@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:my_clinic/pages/login_page.dart';
 import 'package:my_clinic/pages/home_page.dart';
 import 'package:my_clinic/pages/privacypolicy_page.dart';
@@ -22,25 +23,33 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: MyApp._title,
-        routes: ConditionalRouter(public: {
-          '/': (context) => LoginPage()
-        }, private: {
-          '/privacy-policy': (context) => PrivacyPolicyPage(),
-          '/refund-policy': (context) => RefundPolicyPage(),
-          '/terms': (context) => TermsPage(),
-          '/home': (context) => HomePage()
-        })
-        // routes: {
-        //   '/': (context) => LoginPage(),
-        //   '/privacy-policy': (context) => PrivacyPolicyPage(),
-        //   '/refund-policy': (context) => RefundPolicyPage(),
-        //   '/terms': (context) => TermsPage(),
-        //   '/home': (context) => HomePage()
-        // },
-        );
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: true,
+      title: MyApp._title,
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => LoginPage()),
+        GetPage(name: '/privacy-policy', page: () => PrivacyPolicyPage()),
+        GetPage(name: '/refund-policy', page: () => RefundPolicyPage()),
+        GetPage(name: '/terms', page: () => TermsPage()),
+        GetPage(name: '/home', page: () => HomePage())
+      ],
+      // routes: ConditionalRouter(public: {
+      //   '/': (context) => LoginPage()
+      // }, private: {
+      //   '/privacy-policy': (context) => PrivacyPolicyPage(),
+      //   '/refund-policy': (context) => RefundPolicyPage(),
+      //   '/terms': (context) => TermsPage(),
+      //   '/home': (context) => HomePage()
+      // })
+      // routes: {
+      //   '/': (context) => LoginPage(),
+      //   '/privacy-policy': (context) => PrivacyPolicyPage(),
+      //   '/refund-policy': (context) => RefundPolicyPage(),
+      //   '/terms': (context) => TermsPage(),
+      //   '/home': (context) => HomePage()
+      // },
+    );
     // noSuchMethodError class 'String' has no Instance getter StatusCode
   }
 }

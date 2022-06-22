@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 import 'package:my_clinic/pages/home_page.dart';
 import 'package:http/http.dart' as http;
 
@@ -120,10 +121,11 @@ class _LoginPageState extends State<LoginPage> {
                 TextButton(
                   onPressed: () {
                     //forgot password screen
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return ForgetPage();
-                    }));
+                    Get.to(() => ForgetPage());
+                    // Navigator.of(context).push(
+                    //     MaterialPageRoute(builder: (BuildContext context) {
+                    //   return ForgetPage();
+                    // }));
                   },
                   child: const Text('Forgot Password',
                       style:
@@ -200,10 +202,10 @@ class _LoginPageState extends State<LoginPage> {
                 '${response['data']['user']['lastName']}');
 
         var target = await Backend.getToken('fullName');
-
+        var token = await Backend.getToken('token');
+        print('token => $token');
         // ignore: use_build_context_synchronously
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+        Get.to(() => HomePage());
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
