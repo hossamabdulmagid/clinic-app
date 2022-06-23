@@ -66,6 +66,10 @@ class _WelcomeState extends State<Welcome> {
                 ],
               ))
             : ListView.builder(
+                itemCount: appointmentcontrollers.Appointments_list?.data ==
+                        null
+                    ? 0
+                    : appointmentcontrollers.Appointments_list?.data?.length,
                 itemBuilder: (context, index) {
                   return Center(
                     child: Container(
@@ -89,10 +93,7 @@ class _WelcomeState extends State<Welcome> {
                     ),
                   );
                 },
-                itemCount: appointmentcontrollers.Appointments_list?.data ==
-                        null
-                    ? 0
-                    : appointmentcontrollers.Appointments_list?.data?.length),
+              ),
       ),
     );
   }

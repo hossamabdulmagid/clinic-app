@@ -5,6 +5,7 @@ import 'package:my_clinic/pages/refundpolicy_page.dart';
 import 'package:my_clinic/pages/terms_page.dart';
 import 'package:my_clinic/pages/welcome_user.dart';
 import 'package:my_clinic/services/backend.dart';
+import 'package:my_clinic/services/jitsi-config.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,7 +23,8 @@ class _HomePageState extends State<HomePage> {
     TermsPage(),
     RefundPolicyPage(),
     PrivacyPolicyPage(),
-    LoginPage()
+    Meeting(),
+    LoginPage(),
   ];
 
   @override
@@ -78,6 +80,17 @@ class _HomePageState extends State<HomePage> {
                 )),
             BottomNavigationBarItem(
                 activeIcon: Icon(
+                  Icons.video_collection_outlined,
+                  color: Color.fromRGBO(107, 201, 213, 1),
+                ),
+                label: 'jitsi',
+                icon: Icon(
+                  Icons.video_collection_outlined,
+                  color: Colors.grey,
+                  size: 22.0,
+                )),
+            BottomNavigationBarItem(
+                activeIcon: Icon(
                   Icons.exit_to_app,
                   color: Color.fromRGBO(107, 201, 213, 1),
                 ),
@@ -86,14 +99,14 @@ class _HomePageState extends State<HomePage> {
                   Icons.exit_to_app,
                   color: Colors.grey,
                   size: 22.0,
-                ))
+                )),
           ],
           currentIndex: currentIndex,
           onTap: (int index) async {
             setState(() {
               currentIndex = index;
             });
-            if (currentIndex == 4) {
+            if (currentIndex == 5) {
               var token = await Backend.getToken('token');
               var fullName = await Backend.getToken('fullName');
               print('token is ===');
