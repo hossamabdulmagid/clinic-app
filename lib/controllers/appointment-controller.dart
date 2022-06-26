@@ -12,10 +12,10 @@ class AppointmentControllers extends GetxController {
 
   final isLoading = false.obs;
 
-  var id = ''.obs;
-  var secretKey = ''.obs;
+  final id = ''.obs;
+  final secretKey = ''.obs;
 
-  void updatedIdSecretKeyZ(d, s) async {
+  void updatedIdSecretKey(d, s) async {
     try {
       id.value = d;
       secretKey.value = s;
@@ -28,8 +28,16 @@ class AppointmentControllers extends GetxController {
 
       var resultzzz = jsonDecode(resz);
 
+      var jwt = await Backend.storeJwt('jwt', '${resultzzz['data']['jwt']}');
+
+      var resultJwt = await Backend.getToken('jwt');
+
+      print('jwt heheheheh $jwt');
+
+      print('resultJwt heheheheh $resultJwt');
+
       print(
-          'print jwt  Response From Valid Appointment  result =>>> ${resultzzz['data']}');
+          'print jwt  Response From Valid Appointment  result =>>> ${resultzzz['data']['jwt']}');
     } catch (err) {
       print(err);
     }

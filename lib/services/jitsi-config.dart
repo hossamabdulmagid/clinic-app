@@ -3,7 +3,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:my_clinic/services/backend.dart';
+
+import '../controllers/appointment-controller.dart';
 
 class Meeting extends StatefulWidget {
   @override
@@ -11,13 +15,15 @@ class Meeting extends StatefulWidget {
 }
 
 class _MeetingState extends State<Meeting> {
-  final serverText = TextEditingController();
-  final roomText = TextEditingController(text: "plugintestroom");
-  final subjectText = TextEditingController(text: "My Plugin Test Meeting");
-  final nameText = TextEditingController(text: "Plugin Test User");
-  final emailText = TextEditingController(text: "fake@email.com");
-  final iosAppBarRGBAColor =
-      TextEditingController(text: "#0080FF80"); //transparent blue
+  final AppointmentControllers appointmentcontrollers =
+      Get.put(AppointmentControllers());
+  var serverUrl;
+  var roomName;
+  var jwt;
+  var subject;
+  var name;
+  var email;
+  var iosAppBarRGBAColor; //transparent blue
   bool? isAudioOnly = true;
   bool? isAudioMuted = true;
   bool? isVideoMuted = true;
@@ -25,11 +31,14 @@ class _MeetingState extends State<Meeting> {
   @override
   void initState() {
     super.initState();
+    this.handleJoinZ();
     JitsiMeet.addListener(JitsiMeetingListener(
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
         onConferenceTerminated: _onConferenceTerminated,
         onError: _onError));
+
+    print('room${appointmentcontrollers.id} jwt:');
   }
 
   @override
@@ -86,66 +95,38 @@ class _MeetingState extends State<Meeting> {
           const SizedBox(
             height: 16.0,
           ),
-          TextField(
-            controller: serverText,
-            decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Server URL",
-                hintText: "Hint: Leave empty for meet.jitsi.si"),
-          ),
+          // TextField(
+          //   controller: serverText,
+          //   decoration: const InputDecoration(
+          //       border: OutlineInputBorder(),
+          //       labelText: "Server URL",
+          //       hintText: "Hint: Leave empty for meet.jitsi.si"),
+          // ),
           const SizedBox(
             height: 14.0,
           ),
-          TextField(
-            controller: roomText,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Room",
-            ),
-          ),
-          const SizedBox(
-            height: 14.0,
-          ),
-          TextField(
-            controller: subjectText,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Subject",
-            ),
-          ),
-          const SizedBox(
-            height: 14.0,
-          ),
-          TextField(
-            controller: nameText,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Display Name",
-            ),
-          ),
-          const SizedBox(
-            height: 14.0,
-          ),
-          TextField(
-            controller: emailText,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Email",
-            ),
-          ),
-          const SizedBox(
-            height: 14.0,
-          ),
-          TextField(
-            controller: iosAppBarRGBAColor,
-            decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "AppBar Color(IOS only)",
-                hintText: "Hint: This HAS to be in HEX RGBA format"),
-          ),
-          const SizedBox(
-            height: 14.0,
-          ),
+          // TextField(
+          //   controller: roomName,
+          //   decoration: const InputDecoration(
+          //     border: OutlineInputBorder(),
+          //     labelText: "Room",
+          //   ),
+          // ),
+          // const SizedBox(
+          //  height: 14.0,
+          //  ),
+          // const SizedBox(
+          //   height: 14.0,
+          // ),
+          // const SizedBox(
+          //   height: 14.0,
+          // ),
+          // const SizedBox(
+          //   height: 14.0,
+          // ),
+          // const SizedBox(
+          //   height: 14.0,
+          // ),
           CheckboxListTile(
             title: const Text("Audio Only"),
             value: isAudioOnly,
@@ -214,7 +195,7 @@ class _MeetingState extends State<Meeting> {
   }
 
   _joinMeeting() async {
-    String? serverUrl = serverText.text.trim().isEmpty ? null : serverText.text;
+    String serverUrl = 'https://meet.maado.me/';
 
     // Enable or disable any feature flag here
     // If feature flag are not provided, default values will be used
@@ -233,26 +214,27 @@ class _MeetingState extends State<Meeting> {
       }
     }
     // Define meetings options here
-    var options = JitsiMeetingOptions(room: roomText.text)
-      ..serverURL = serverUrl
-      ..subject = subjectText.text
-      ..userDisplayName = nameText.text
-      ..userEmail = emailText.text
-      ..iosAppBarRGBAColor = iosAppBarRGBAColor.text
+    var options = JitsiMeetingOptions(room: 'room${appointmentcontrollers.id}')
+      ..serverURL = 'https://meet.maado.me/'
+      ..token = jwt
+      ..userDisplayName = name
+      ..userEmail = email
+      ..iosAppBarRGBAColor = iosAppBarRGBAColor
       ..audioOnly = isAudioOnly
       ..audioMuted = isAudioMuted
       ..videoMuted = isVideoMuted
       ..featureFlags.addAll(featureFlags)
       ..webOptions = {
-        "roomName": roomText.text,
+        "roomName": "room${appointmentcontrollers.id}",
         "width": "100%",
         "height": "100%",
         "enableWelcomePage": false,
         "chromeExtensionBanner": null,
-        "userInfo": {"displayName": nameText.text}
+        "userInfo": {"displayName": name}
       };
 
-    debugPrint("JitsiMeetingOptions: $options");
+    debugPrint(
+        "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@JitsiMeetingOptions: $options");
     await JitsiMeet.joinMeeting(
       options,
       listener: JitsiMeetingListener(
@@ -289,5 +271,20 @@ class _MeetingState extends State<Meeting> {
 
   _onError(error) {
     debugPrint("_onError broadcasted: $error");
+  }
+
+  handleJoinZ() async {
+    print('runnug');
+
+    jwt = await Backend.getToken('jwt');
+
+    print('serverUrl $serverUrl');
+    print('roomName $roomName');
+    print('jwt $jwt');
+    print('subject $subject');
+    print('name $name');
+    print('email $email');
+
+    print('runnug');
   }
 }

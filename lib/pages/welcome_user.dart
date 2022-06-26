@@ -29,7 +29,7 @@ class _WelcomeState extends State<Welcome> {
   late bool Loading = true;
   String? name;
 
-  AppointmentControllers appointmentcontrollers =
+  final AppointmentControllers appointmentcontrollers =
       Get.put(AppointmentControllers());
 
   String utcTo12HourFormatToLocal(String utcTime) {
@@ -92,7 +92,7 @@ class _WelcomeState extends State<Welcome> {
                                 fontWeight: FontWeight.bold,
                               )),
                           onTap: () => {
-                                appointmentcontrollers.updatedIdSecretKeyZ(
+                                appointmentcontrollers.updatedIdSecretKey(
                                     '${appointmentcontrollers.Appointments_list?.data?[index].sId.toString()}',
                                     '${appointmentcontrollers.Appointments_list?.data?[index].secretKey.toString()}'),
                                 // launch(

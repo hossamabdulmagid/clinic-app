@@ -63,6 +63,11 @@ abstract class Backend {
         key: key, value: token, aOptions: getAndroidOptions());
   }
 
+  static Future storeJwt(String key, String jwt) async {
+    return await storage.write(
+        key: key, value: jwt, aOptions: getAndroidOptions());
+  }
+
   static Future getToken(String key) async {
     return await storage.read(key: key, aOptions: getAndroidOptions());
   }
