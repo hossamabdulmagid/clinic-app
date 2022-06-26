@@ -79,17 +79,25 @@ class _WelcomeState extends State<Welcome> {
                       ),
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(26.0),
-                      child: Text(
-                          'Doctor:- ${appointmentcontrollers.Appointments_list?.data?[index].doctorName}'
-                          ' \n'
-                          'start:- ${utcTo12HourFormatToLocal(appointmentcontrollers.Appointments_list?.data?[index].startDate)}'
-                          ' \n'
-                          'end:- ${utcTo12HourFormatToLocal(appointmentcontrollers.Appointments_list?.data?[index].endDate)}',
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.black45,
-                            fontWeight: FontWeight.bold,
-                          )),
+                      child: InkWell(
+                          child: Text(
+                              'Doctor:- ${appointmentcontrollers.Appointments_list?.data?[index].doctorName}'
+                              ' \n'
+                              'start:- ${utcTo12HourFormatToLocal(appointmentcontrollers.Appointments_list?.data?[index].startDate)}'
+                              ' \n'
+                              'join Appointment',
+                              style: const TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.black45,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          onTap: () => {
+                                appointmentcontrollers.updatedIdSecretKeyZ(
+                                    '${appointmentcontrollers.Appointments_list?.data?[index].sId.toString()}',
+                                    '${appointmentcontrollers.Appointments_list?.data?[index].secretKey.toString()}'),
+                                // launch(
+                                //     'https://docs.flutter.io/flutter/services/UrlLauncher-class.html')
+                              }),
                     ),
                   );
                 },

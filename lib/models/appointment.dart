@@ -4,7 +4,7 @@ class Appointment {
 
   Appointment({this.success, this.data});
 
-  Appointment.fromJson(Map<String, dynamic> json) {
+  Appointment.fromJson(Map<String?, dynamic> json) {
     success = json['success'];
     if (json['data'] != null) {
       data = <Data>[];
@@ -14,8 +14,8 @@ class Appointment {
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<String?, dynamic> toJson() {
+    final Map<String?, dynamic> data = new Map<String?, dynamic>();
     data['success'] = this.success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
@@ -78,7 +78,7 @@ class Data {
       this.updatedBy,
       this.updatedByName});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String?, dynamic> json) {
     sId = json['_id'];
     doctorName = json['doctorName'];
     startDate = json['startDate'];
@@ -106,8 +106,8 @@ class Data {
     updatedByName = json['updatedByName'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<String?, dynamic> toJson() {
+    final Map<String?, dynamic> data = new Map<String?, dynamic>();
     data['_id'] = this.sId;
     data['doctorName'] = this.doctorName;
     data['startDate'] = this.startDate;
