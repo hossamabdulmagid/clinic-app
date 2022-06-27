@@ -53,7 +53,6 @@ class AppointmentControllers extends GetxController {
       print(result);
       print(result);
       print('res from get result $result');
-
       Appointments_list = Appointment.fromJson(result);
 
       isLoading(true);

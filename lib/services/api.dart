@@ -4,14 +4,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class Api {
   final Dio api = Dio();
   String? accessToken;
-  final _baseUrl = 'http://192.168.1.12/api/v1/';
+  final baseUrl = 'https://base.maado.me/api/v1';
   final _storage = const FlutterSecureStorage();
-
   Api() {
+    print('class Runing');
+
     api.interceptors
         .add(InterceptorsWrapper(onRequest: (options, handler) async {
-      if (!options.path.contains('http')) {
-        options.path = _baseUrl + options.path;
+      if (!options.path.contains('https')) {
+        options.path = baseUrl + options.path;
       }
 
       options.headers['Content-Type'] = 'application/json; charset=UTF-8';
@@ -33,6 +34,8 @@ class Api {
   }
 
   Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
+    print('_retry Runing');
+
     final options = Options(
       method: requestOptions.method,
       headers: requestOptions.headers,
@@ -44,16 +47,25 @@ class Api {
   }
 
   Future<bool> refreshToken() async {
+    print('refreshToken Runing');
+
     final refreshToken = await _storage.read(key: 'refreshToken');
     final response = await api
-        .post('${_baseUrl}auth/refresh', data: {'refreshToken': refreshToken});
+        .post('$baseUrl/auth/refresh', data: {'refreshToken': refreshToken});
 
     if (response.statusCode == 201) {
+      print('response.data ${response.data}');
+      print('old accessToken $accessToken');
       accessToken = response.data;
+      print('new Refresh Token ${response.data}');
+
       return true;
     } else {
       // refresh token is wrong
+      print('null accessToken $accessToken');
+
       accessToken = null;
+      print('null accessToken $accessToken');
       _storage.deleteAll();
       return false;
     }

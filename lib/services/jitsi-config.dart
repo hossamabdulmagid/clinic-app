@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:my_clinic/pages/home_page.dart';
 import 'package:my_clinic/services/backend.dart';
 
 import '../controllers/appointment-controller.dart';
@@ -31,14 +32,14 @@ class _MeetingState extends State<Meeting> {
   @override
   void initState() {
     super.initState();
-    this.handleJoinZ();
+    handleJoin();
     JitsiMeet.addListener(JitsiMeetingListener(
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
         onConferenceTerminated: _onConferenceTerminated,
         onError: _onError));
 
-    print('room${appointmentcontrollers.id} jwt:');
+    print('room${appointmentcontrollers.id} @@@');
   }
 
   @override
@@ -237,8 +238,7 @@ class _MeetingState extends State<Meeting> {
         "userInfo": {"displayName": name}
       };
 
-    debugPrint(
-        "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@JitsiMeetingOptions: $options");
+    debugPrint("@@@@@@@@@@@@@@@@@@ => jitsiMeetingOptions: $options");
     await JitsiMeet.joinMeeting(
       options,
       listener: JitsiMeetingListener(
@@ -269,7 +269,13 @@ class _MeetingState extends State<Meeting> {
     debugPrint("_onConferenceJoined broadcasted with message: $message");
   }
 
-  void _onConferenceTerminated(message) {
+  void _onConferenceTerminated(message) async {
+    Get.defaultDialog(
+      title: 'appointment has been end',
+    );
+
+    Get.to(() => HomePage());
+
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
   }
 
@@ -277,18 +283,8 @@ class _MeetingState extends State<Meeting> {
     debugPrint("_onError broadcasted: $error");
   }
 
-  handleJoinZ() async {
+  handleJoin() async {
     print('runnug');
-
     jwt = await Backend.getToken('jwt');
-
-    print('serverUrl $serverUrl');
-    print('roomName $roomName');
-    print('jwt $jwt');
-    print('subject $subject');
-    print('name $name');
-    print('email $email');
-
-    print('runnug');
   }
 }

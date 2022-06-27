@@ -12,6 +12,7 @@ import 'package:my_clinic/pages/clinic.dart';
 // ignore: unused_import
 import 'package:my_clinic/pages/login_page.dart';
 import 'package:my_clinic/services/backend.dart';
+import 'package:my_clinic/services/jitsi-config.dart';
 // ignore: unused_import
 import 'package:url_launcher/url_launcher.dart';
 // ignore: depend_on_referenced_packages
@@ -80,24 +81,29 @@ class _WelcomeState extends State<Welcome> {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(26.0),
                       child: InkWell(
-                          child: Text(
-                              'Doctor:- ${appointmentcontrollers.Appointments_list?.data?[index].doctorName}'
-                              ' \n'
-                              'start:- ${utcTo12HourFormatToLocal(appointmentcontrollers.Appointments_list?.data?[index].startDate)}'
-                              ' \n'
-                              'join Appointment',
-                              style: const TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black45,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          onTap: () => {
-                                appointmentcontrollers.updatedIdSecretKey(
-                                    '${appointmentcontrollers.Appointments_list?.data?[index].sId.toString()}',
-                                    '${appointmentcontrollers.Appointments_list?.data?[index].secretKey.toString()}'),
-                                // launch(
-                                //     'https://docs.flutter.io/flutter/services/UrlLauncher-class.html')
-                              }),
+                        child: Text(
+                          'Doctor:- ${appointmentcontrollers.Appointments_list?.data?[index].doctorName}'
+                          ' \n'
+                          'start:- ${utcTo12HourFormatToLocal(appointmentcontrollers.Appointments_list?.data?[index].startDate)}'
+                          ' \n'
+                          '${appointmentcontrollers.Appointments_list?.data?[index].hasEnded == true ? "join Appointment" : "meeting End"}',
+                          style: const TextStyle(
+                            fontSize: 15.0,
+                            color: Colors.black45,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onTap: () => {
+                          appointmentcontrollers.updatedIdSecretKey(
+                              '${appointmentcontrollers.Appointments_list?.data?[index].sId.toString()}',
+                              '${appointmentcontrollers.Appointments_list?.data?[index].secretKey.toString()}'),
+
+                          Get.to(() => Meeting())
+
+                          // launch(
+                          //     'https://docs.flutter.io/flutter/services/UrlLauncher-class.html')
+                        },
+                      ),
                     ),
                   );
                 },

@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     TermsPage(),
     RefundPolicyPage(),
     PrivacyPolicyPage(),
-    Meeting(),
+    // Meeting(),
     LoginPage(),
   ];
 
@@ -78,17 +78,17 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.grey,
                   size: 22.0,
                 )),
-            BottomNavigationBarItem(
-                activeIcon: Icon(
-                  Icons.video_collection_outlined,
-                  color: Color.fromRGBO(107, 201, 213, 1),
-                ),
-                label: 'jitsi',
-                icon: Icon(
-                  Icons.video_collection_outlined,
-                  color: Colors.grey,
-                  size: 22.0,
-                )),
+            // BottomNavigationBarItem(
+            //     activeIcon: Icon(
+            //       Icons.video_collection_outlined,
+            //       color: Color.fromRGBO(107, 201, 213, 1),
+            //     ),
+            //     label: 'jitsi',
+            //     icon: Icon(
+            //       Icons.video_collection_outlined,
+            //       color: Colors.grey,
+            //       size: 22.0,
+            //     )),
             BottomNavigationBarItem(
                 activeIcon: Icon(
                   Icons.exit_to_app,
@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             setState(() {
               currentIndex = index;
             });
-            if (currentIndex == 5) {
+            if (currentIndex == 4) {
               var token = await Backend.getToken('token');
               var fullName = await Backend.getToken('fullName');
               print('token is ===');

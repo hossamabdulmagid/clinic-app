@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_clinic/pages/login_page.dart';
 import 'package:my_clinic/pages/home_page.dart';
+import 'package:my_clinic/services/api.dart';
+import 'package:my_clinic/services/jitsi-config.dart';
 // import 'package:my_clinic/pages/privacypolicy_page.dart';
 // import 'package:my_clinic/pages/refundpolicy_page.dart';
 // import 'package:my_clinic/pages/terms_page.dart';
 // import 'package:my_clinic/services/backend.dart';
+import 'package:riverpod/riverpod.dart';
 
 void main() => runApp(const MyApp());
 
@@ -28,7 +31,8 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => LoginPage()),
-        GetPage(name: '/home', page: () => HomePage())
+        GetPage(name: '/home', page: () => HomePage()),
+        GetPage(name: '/appointment', page: () => Meeting())
       ],
     );
   }
