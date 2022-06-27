@@ -54,7 +54,7 @@ class _WelcomeState extends State<Welcome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-        () => appointmentcontrollers.isLoading.isTrue
+        () => appointmentcontrollers.checkAppointMentIsEmpty.isTrue
             ? Center(
                 child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

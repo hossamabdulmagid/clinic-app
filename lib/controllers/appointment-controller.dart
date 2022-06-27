@@ -12,6 +12,8 @@ class AppointmentControllers extends GetxController {
 
   final isLoading = false.obs;
 
+  final checkAppointMentIsEmpty = false.obs;
+
   final id = ''.obs;
   final secretKey = ''.obs;
 
@@ -53,8 +55,15 @@ class AppointmentControllers extends GetxController {
       print(result);
       print(result);
       print('res from get result $result');
-      Appointments_list = Appointment.fromJson(result);
 
+      Appointments_list = Appointment.fromJson(result);
+      if (result?['data'].length == 0) {
+        print('@@@@@@@@@@@@@@@@@@@@@@@@');
+        checkAppointMentIsEmpty(true);
+      } else {
+        print('##################');
+        checkAppointMentIsEmpty(false);
+      }
       isLoading(true);
     } on TypeError {
       print(TypeError());
