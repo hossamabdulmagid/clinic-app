@@ -95,8 +95,10 @@ class _WelcomeState extends State<Welcome> {
                         ),
                         onTap: () => {
                           appointmentcontrollers.updatedIdSecretKey(
-                              '${appointmentcontrollers.Appointments_list?.data?[index].sId.toString()}',
-                              '${appointmentcontrollers.Appointments_list?.data?[index].secretKey.toString()}'),
+                            '${appointmentcontrollers.Appointments_list?.data?[index].sId.toString()}',
+                            '${appointmentcontrollers.Appointments_list?.data?[index].secretKey.toString()}',
+                            '${appointmentcontrollers.Appointments_list?.data?[index].patientName.toString()}',
+                          ),
 
                           Get.to(() => Meeting())
 

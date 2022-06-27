@@ -222,7 +222,7 @@ class _MeetingState extends State<Meeting> {
     var options = JitsiMeetingOptions(room: 'room${appointmentcontrollers.id}')
       ..serverURL = 'https://meet.maado.me/'
       ..token = jwt
-      ..userDisplayName = name
+      ..userDisplayName = '${appointmentcontrollers.patientName}'
       ..userEmail = email
       ..iosAppBarRGBAColor = iosAppBarRGBAColor
       ..audioOnly = isAudioOnly
@@ -235,7 +235,9 @@ class _MeetingState extends State<Meeting> {
         "height": "100%",
         "enableWelcomePage": false,
         "chromeExtensionBanner": null,
-        "userInfo": {"displayName": name}
+        "userInfo": {
+          "displayName": name,
+        }
       };
 
     debugPrint("@@@@@@@@@@@@@@@@@@ => jitsiMeetingOptions: $options");

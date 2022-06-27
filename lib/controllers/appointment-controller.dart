@@ -16,15 +16,20 @@ class AppointmentControllers extends GetxController {
 
   final id = ''.obs;
   final secretKey = ''.obs;
+  final patientName = ''.obs;
 
-  void updatedIdSecretKey(d, s) async {
+  void updatedIdSecretKey(d, s, x) async {
     try {
       id.value = d;
       secretKey.value = s;
+      patientName.value = x;
+
       var token = await Backend.getToken('token');
 
       print('new id while clicking $id');
       print('new Secret Key While Clicking $secretKey');
+      print('new Secret Key While Clicking $patientName');
+
       var resz = await Backend.get(
           'clinic/appointment-validate/$id/$secretKey', token);
 
@@ -34,9 +39,9 @@ class AppointmentControllers extends GetxController {
 
       var resultJwt = await Backend.getToken('jwt');
 
-      print('jwt heheheheh $jwt');
+      // print('jwt heheheheh $resz');
 
-      print('resultJwt heheheheh $resultJwt');
+      print('resultJwt heheheheh ${resultzzz}');
 
       print(
           'print jwt  Response From Valid Appointment  result =>>> ${resultzzz['data']['jwt']}');

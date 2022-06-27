@@ -203,8 +203,6 @@ class _LoginPageState extends State<LoginPage> {
 
         var target = await Backend.getToken('fullName');
         var token = await Backend.getToken('token');
-        print('token $token');
-        // print('token => $token');
         // ignore: use_build_context_synchronously
         Get.to(() => HomePage());
       }
