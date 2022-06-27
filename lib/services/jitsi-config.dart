@@ -206,10 +206,14 @@ class _MeetingState extends State<Meeting> {
     if (!kIsWeb) {
       // Here is an example, disabling features for each platform
       if (Platform.isAndroid) {
+        featureFlags[FeatureFlagEnum.CHAT_ENABLED] = false;
+
         // Disable ConnectionService usage on Android to avoid issues (see README)
         featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
       } else if (Platform.isIOS) {
         // Disable PIP on iOS as it looks weird
+        featureFlags[FeatureFlagEnum.CHAT_ENABLED] = false;
+
         featureFlags[FeatureFlagEnum.PIP_ENABLED] = false;
       }
     }
