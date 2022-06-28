@@ -302,7 +302,7 @@ class _MeetingState extends State<Meeting> {
     final scaffold = ScaffoldMessenger.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content: const Text('Appointment has been end'),
+        content: const Text('Appointment has been end '),
         action: SnackBarAction(
             label: 'CLOSE', onPressed: scaffold.hideCurrentSnackBar),
       ),

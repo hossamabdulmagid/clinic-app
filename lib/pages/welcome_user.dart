@@ -29,6 +29,8 @@ class _WelcomeState extends State<Welcome> {
   List? validAppointments;
   late bool Loading = true;
   String? name;
+  bool pressed = true;
+  int checkedIndex = -1;
 
   final AppointmentControllers appointmentcontrollers =
       Get.put(AppointmentControllers());
@@ -48,6 +50,7 @@ class _WelcomeState extends State<Welcome> {
   void initState() {
     super.initState();
     appointmentcontrollers.getAppointments();
+    checkedIndex;
   }
 
   @override
@@ -73,36 +76,52 @@ class _WelcomeState extends State<Welcome> {
                     : appointmentcontrollers.Appointments_list?.data?.length,
                 itemBuilder: (context, index) {
                   return Card(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        color: const Color(0xffdddddd),
-                      ),
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(26.0),
-                      child: InkWell(
-                        child: Text(
-                          'Doctor:- ${appointmentcontrollers.Appointments_list?.data?[index].doctorName}'
-                          ' \n'
-                          'start:- ${utcTo12HourFormatToLocal(appointmentcontrollers.Appointments_list?.data?[index].startDate)}'
-                          ' \n'
-                          '${appointmentcontrollers.Appointments_list?.data?[index].hasEnded == true ? "join Appointment" : "meeting End"}',
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.black45,
-                            fontWeight: FontWeight.bold,
+                    child: GestureDetector(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: checkedIndex == index
+                                ? const Color.fromRGBO(107, 201, 213, 1)
+                                : Colors.grey),
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(26.0),
+                        child: Center(
+                          child: Ink(
+                            color: Colors.blue,
+                            child: Text(
+                              'Doctor:- ${appointmentcontrollers.Appointments_list?.data?[index].doctorName}'
+                              ' \n'
+                              'start:- ${utcTo12HourFormatToLocal(appointmentcontrollers.Appointments_list?.data?[index].startDate)}'
+                              ' \n'
+                              '${appointmentcontrollers.Appointments_list?.data?[index].hasEnded == true ? "join Appointment" : "meeting End"}',
+                              style: checkedIndex == index
+                                  ? const TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white70,
+                                      fontWeight: FontWeight.bold,
+                                    )
+                                  : const TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.black45,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                            ),
                           ),
                         ),
-                        onTap: () => {
-                          appointmentcontrollers.validateAppointment(
-                            '${appointmentcontrollers.Appointments_list?.data?[index].sId}',
-                            '${appointmentcontrollers.Appointments_list?.data?[index].secretKey}',
-                            '${appointmentcontrollers.Appointments_list?.data?[index].patientName}',
-                          ),
-                          // launch(
-                          //     '/appointment/${appointmentcontrollers.Appointments_list?.data?[index].sId}/${appointmentcontrollers.Appointments_list?.data?[index].secretKey}')
-                        },
                       ),
+                      onTap: () => {
+                        setState(() {
+                          checkedIndex = index;
+                        }),
+                        _showToast(context),
+                        appointmentcontrollers.validateAppointment(
+                          '${appointmentcontrollers.Appointments_list?.data?[index].sId}',
+                          '${appointmentcontrollers.Appointments_list?.data?[index].secretKey}',
+                          '${appointmentcontrollers.Appointments_list?.data?[index].patientName}',
+                        ),
+                        // launch(
+                        //     '/appointment/${appointmentcontrollers.Appointments_list?.data?[index].sId}/${appointmentcontrollers.Appointments_list?.data?[index].secretKey}')
+                      },
                     ),
                   );
                 },
@@ -120,5 +139,16 @@ class _WelcomeState extends State<Welcome> {
       datax = resBody['data'];
     });
     return 'Success!';
+  }
+
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Start Appointment has been Selected'),
+        action: SnackBarAction(
+            label: 'CLOSE', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 }
