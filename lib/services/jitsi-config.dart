@@ -231,7 +231,7 @@ class _MeetingState extends State<Meeting> {
     // Define meetings options here
     var options = JitsiMeetingOptions(room: 'room${appointmentcontrollers.id}')
       ..serverURL = 'https://meet.maado.me/'
-      ..token = jwt
+      ..token = '${appointmentcontrollers.jwt_for_appointment}'
       ..userDisplayName = '${appointmentcontrollers.patientName}'
       ..userEmail = email
       ..iosAppBarRGBAColor = iosAppBarRGBAColor
@@ -247,6 +247,7 @@ class _MeetingState extends State<Meeting> {
         "chromeExtensionBanner": null,
         "userInfo": {
           "displayName": name,
+          "email": email,
         }
       };
 
@@ -297,6 +298,7 @@ class _MeetingState extends State<Meeting> {
 
   handleJoin() async {
     print('runnug');
-    jwt = await Backend.getToken('jwt');
+    email = await Backend.getToken('email');
+    print('email $email');
   }
 }

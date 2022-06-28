@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:my_clinic/models/appointment.dart';
 import 'package:my_clinic/services/backend.dart';
+import 'package:my_clinic/services/jitsi-config.dart';
 
 class AppointmentControllers extends GetxController {
   Appointment? Appointments_list;
@@ -14,6 +15,7 @@ class AppointmentControllers extends GetxController {
   final id = ''.obs;
   final secretKey = ''.obs;
   final patientName = ''.obs;
+  final jwt_for_appointment = ''.obs;
 
   void updatedIdSecretKey(x, y, z) async {
     try {
@@ -23,25 +25,26 @@ class AppointmentControllers extends GetxController {
 
       var token = await Backend.getToken('token');
 
-      print('new id while clicking  => $id');
-      print('new Secret Key While Clicking => $secretKey');
-      print('new patientName While Clicking => $patientName');
+      // print('new id while clicking  => $id');
+      // print('new Secret Key While Clicking => $secretKey');
+      // print('new patientName While Clicking => $patientName');
 
-      var res = await Backend.get(
-          'clinic/appointment-validate/$id/$secretKey', token);
+      if (token.length != 0) {
+        var res = await Backend.get(
+            'clinic/appointment-validate/$id/$secretKey', token);
 
-      var result = jsonDecode(res);
+        var result = jsonDecode(res);
 
-      var jwt = await Backend.storeJwt('jwt', '${result['data']['jwt']}');
+        var jwt = await Backend.storeJwt(
+            'jwt-for-meeting', '${result['data']['jwt']}');
 
-      var resultJwt = await Backend.getToken('jwt');
-
-      // print('jwt heheheheh $resz');
-
-      print('resultJwt heheheheh ${result}');
-
-      print(
-          'print jwt  Response From Valid Appointment  result =>>> ${result['data']['jwt']}');
+        if ('${result['data']['jwt']}' != null &&
+            '${result['data']['jwt']}'.isNotEmpty) {
+          jwt_for_appointment.value = '${result['data']['jwt']}';
+          await Future.delayed(const Duration(seconds: 2));
+          return Get.to(() => Meeting());
+        }
+      }
     } catch (err) {
       print(err);
     }

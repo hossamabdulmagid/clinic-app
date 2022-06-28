@@ -95,12 +95,10 @@ class _WelcomeState extends State<Welcome> {
                         ),
                         onTap: () => {
                           appointmentcontrollers.updatedIdSecretKey(
-                            '${appointmentcontrollers.Appointments_list?.data?[index].sId.toString()}',
-                            '${appointmentcontrollers.Appointments_list?.data?[index].secretKey.toString()}',
-                            '${appointmentcontrollers.Appointments_list?.data?[index].patientName.toString()}',
+                            '${appointmentcontrollers.Appointments_list?.data?[index].sId}',
+                            '${appointmentcontrollers.Appointments_list?.data?[index].secretKey}',
+                            '${appointmentcontrollers.Appointments_list?.data?[index].patientName}',
                           ),
-
-                          Get.to(() => Meeting())
 
                           // launch(
                           //     'https://docs.flutter.io/flutter/services/UrlLauncher-class.html')

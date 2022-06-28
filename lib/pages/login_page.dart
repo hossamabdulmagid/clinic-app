@@ -207,14 +207,12 @@ class _LoginPageState extends State<LoginPage> {
             SnackBar(content: Text('${response?['error']['message']}')));
       } else if (response['data']['token'] != null) {
         await Backend.storeToken('token', '${response['data']['token']}');
-
+        print('@@@response $response');
         await Backend.storeEmail(
-            'fullName',
-            '${response['data']['user']['firstName']}'
-                ' '
-                '${response['data']['user']['lastName']}');
+            'email', '${response['data']['user']['email']}');
 
-        var target = await Backend.getToken('fullName');
+        var target = await Backend.getToken('email');
+        print('target Email $target');
         var token = await Backend.getToken('token');
         // ignore: use_build_context_synchronously
         Get.to(() => HomePage());
