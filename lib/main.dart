@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
       getPages: [
         GetPage(name: '/', page: () => LoginPage()),
         GetPage(name: '/home', page: () => HomePage()),
-        GetPage(name: '/appointment', page: () => Meeting())
+        GetPage(name: '/appointment/:id/:secretKey', page: () => Meeting())
       ],
     );
   }

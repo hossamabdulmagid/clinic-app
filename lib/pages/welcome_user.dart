@@ -47,7 +47,7 @@ class _WelcomeState extends State<Welcome> {
   @override
   void initState() {
     super.initState();
-    appointmentcontrollers.GetAppointments();
+    appointmentcontrollers.getAppointments();
   }
 
   @override
@@ -72,7 +72,7 @@ class _WelcomeState extends State<Welcome> {
                     ? 0
                     : appointmentcontrollers.Appointments_list?.data?.length,
                 itemBuilder: (context, index) {
-                  return Center(
+                  return Card(
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.0),
@@ -94,14 +94,13 @@ class _WelcomeState extends State<Welcome> {
                           ),
                         ),
                         onTap: () => {
-                          appointmentcontrollers.updatedIdSecretKey(
+                          appointmentcontrollers.validateAppointment(
                             '${appointmentcontrollers.Appointments_list?.data?[index].sId}',
                             '${appointmentcontrollers.Appointments_list?.data?[index].secretKey}',
                             '${appointmentcontrollers.Appointments_list?.data?[index].patientName}',
                           ),
-
                           // launch(
-                          //     'https://docs.flutter.io/flutter/services/UrlLauncher-class.html')
+                          //     '/appointment/${appointmentcontrollers.Appointments_list?.data?[index].sId}/${appointmentcontrollers.Appointments_list?.data?[index].secretKey}')
                         },
                       ),
                     ),

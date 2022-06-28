@@ -17,7 +17,7 @@ class AppointmentControllers extends GetxController {
   final patientName = ''.obs;
   final jwt_for_appointment = ''.obs;
 
-  void updatedIdSecretKey(x, y, z) async {
+  void validateAppointment(x, y, z) async {
     try {
       id.value = x;
       secretKey.value = y;
@@ -38,10 +38,10 @@ class AppointmentControllers extends GetxController {
         var jwt = await Backend.storeJwt(
             'jwt-for-meeting', '${result['data']['jwt']}');
 
-        if ('${result['data']['jwt']}' != null &&
-            '${result['data']['jwt']}'.isNotEmpty) {
+        if ('${result['data']['jwt']}'.isNotEmpty) {
           jwt_for_appointment.value = '${result['data']['jwt']}';
-          await Future.delayed(const Duration(seconds: 2));
+          await Future.delayed(const Duration(seconds: 1));
+          print('jwt_for_appointment => $jwt_for_appointment');
           return Get.to(() => Meeting());
         }
       }
@@ -50,7 +50,7 @@ class AppointmentControllers extends GetxController {
     }
   }
 
-  GetAppointments() async {
+  getAppointments() async {
     try {
       var token = await Backend.getToken('token');
 
