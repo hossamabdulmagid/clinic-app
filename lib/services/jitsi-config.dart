@@ -283,12 +283,8 @@ class _MeetingState extends State<Meeting> {
   }
 
   void _onConferenceTerminated(message) async {
-    Get.defaultDialog(
-      title: 'appointment has been end',
-    );
-
     Get.to(() => HomePage());
-
+    _showToast(context);
     debugPrint("_onConferenceTerminated broadcasted with message: $message");
   }
 
@@ -300,5 +296,16 @@ class _MeetingState extends State<Meeting> {
     print('runnug');
     email = await Backend.getToken('email');
     print('email $email');
+  }
+
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Appointment has been end'),
+        action: SnackBarAction(
+            label: 'CLOSE', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 }
