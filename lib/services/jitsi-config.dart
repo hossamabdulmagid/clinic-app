@@ -94,44 +94,13 @@ class _MeetingState extends State<Meeting> {
       child: Column(
         children: <Widget>[
           const SizedBox(
-            height: 16.0,
+            height: 30.0,
           ),
-          // TextField(
-          //   controller: serverText,
-          //   decoration: const InputDecoration(
-          //       border: OutlineInputBorder(),
-          //       labelText: "Server URL",
-          //       hintText: "Hint: Leave empty for meet.jitsi.si"),
-          // ),
-          const SizedBox(
-            height: 14.0,
-          ),
-          // TextField(
-          //   controller: roomName,
-          //   decoration: const InputDecoration(
-          //     border: OutlineInputBorder(),
-          //     labelText: "Room",
-          //   ),
-          // ),
-          // const SizedBox(
-          //  height: 14.0,
-          //  ),
-          // const SizedBox(
-          //   height: 14.0,
-          // ),
-          // const SizedBox(
-          //   height: 14.0,
-          // ),
-          // const SizedBox(
-          //   height: 14.0,
-          // ),
-          // const SizedBox(
-          //   height: 14.0,
-          // ),
           CheckboxListTile(
             title: const Text("Audio Only"),
             value: isAudioOnly,
             onChanged: _onAudioOnlyChanged,
+            activeColor: Color.fromRGBO(107, 201, 213, 1),
           ),
           const SizedBox(
             height: 14.0,
@@ -140,6 +109,7 @@ class _MeetingState extends State<Meeting> {
             title: const Text("Audio Muted"),
             value: isAudioMuted,
             onChanged: _onAudioMutedChanged,
+            activeColor: Color.fromRGBO(107, 201, 213, 1),
           ),
           const SizedBox(
             height: 14.0,
@@ -148,6 +118,7 @@ class _MeetingState extends State<Meeting> {
             title: const Text("Video Muted"),
             value: isVideoMuted,
             onChanged: _onVideoMutedChanged,
+            activeColor: Color.fromRGBO(107, 201, 213, 1),
           ),
           const Divider(
             height: 48.0,
@@ -160,13 +131,52 @@ class _MeetingState extends State<Meeting> {
               onPressed: () {
                 _joinMeeting();
               },
-              child: const Text(
+              child: Text(
                 "Join Meeting",
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white),
               ),
               style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateColor.resolveWith((states) => Colors.blue)),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromRGBO(107, 201, 213, 1)),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    side: const BorderSide(
+                      color: Color.fromRGBO(107, 201, 213, 1),
+                      width: 2.0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 24.0,
+          ),
+          SizedBox(
+            height: 64.0,
+            width: double.maxFinite,
+            child: ElevatedButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: Text(
+                'Cancle Meeting',
+                style: TextStyle(color: Colors.white),
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromRGBO(107, 201, 213, 1)),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    side: const BorderSide(
+                      color: Color.fromRGBO(107, 201, 213, 1),
+                      width: 2.0,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
           const SizedBox(

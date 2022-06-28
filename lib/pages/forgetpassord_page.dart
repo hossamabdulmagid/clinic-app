@@ -84,9 +84,18 @@ class _ForgetPageState extends State<ForgetPage> {
               height: 50,
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: const Color.fromRGBO(107, 201, 213, 1),
-                  // minimumSize: const Size.fromHeight(5),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromRGBO(107, 201, 213, 1)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      side: const BorderSide(
+                        color: Color.fromRGBO(107, 201, 213, 1),
+                        width: 2.0,
+                      ),
+                    ),
+                  ),
                 ),
                 onPressed: () {
                   Navigator.pop(context,

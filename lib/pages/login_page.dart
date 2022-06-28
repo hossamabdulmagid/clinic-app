@@ -131,15 +131,28 @@ class _LoginPageState extends State<LoginPage> {
                       style:
                           TextStyle(color: Color.fromRGBO(107, 201, 213, 1))),
                 ),
+                const SizedBox(
+                  height: 14.0,
+                ),
                 Container(
                     constraints:
                         const BoxConstraints.tightFor(width: 370, height: 50),
                     height: 50,
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: const Color.fromRGBO(
-                            107, 201, 213, 1), // Background color
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color.fromRGBO(107, 201, 213, 1)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            side: const BorderSide(
+                              color: Color.fromRGBO(107, 201, 213, 1),
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
                       ),
                       onPressed: () async {
                         if (isLoading) {

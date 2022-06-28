@@ -1,11 +1,8 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:get/get.dart';
 import 'package:my_clinic/models/appointment.dart';
-import 'package:my_clinic/services/api.dart';
 import 'package:my_clinic/services/backend.dart';
-import 'package:dio/dio.dart';
 
 class AppointmentControllers extends GetxController {
   Appointment? Appointments_list;
@@ -18,33 +15,33 @@ class AppointmentControllers extends GetxController {
   final secretKey = ''.obs;
   final patientName = ''.obs;
 
-  void updatedIdSecretKey(d, s, x) async {
+  void updatedIdSecretKey(x, y, z) async {
     try {
-      id.value = d;
-      secretKey.value = s;
-      patientName.value = x;
+      id.value = x;
+      secretKey.value = y;
+      patientName.value = z;
 
       var token = await Backend.getToken('token');
 
-      print('new id while clicking $id');
-      print('new Secret Key While Clicking $secretKey');
-      print('new Secret Key While Clicking $patientName');
+      print('new id while clicking  => $id');
+      print('new Secret Key While Clicking => $secretKey');
+      print('new patientName While Clicking => $patientName');
 
-      var resz = await Backend.get(
+      var res = await Backend.get(
           'clinic/appointment-validate/$id/$secretKey', token);
 
-      var resultzzz = jsonDecode(resz);
+      var result = jsonDecode(res);
 
-      var jwt = await Backend.storeJwt('jwt', '${resultzzz['data']['jwt']}');
+      var jwt = await Backend.storeJwt('jwt', '${result['data']['jwt']}');
 
       var resultJwt = await Backend.getToken('jwt');
 
       // print('jwt heheheheh $resz');
 
-      print('resultJwt heheheheh ${resultzzz}');
+      print('resultJwt heheheheh ${result}');
 
       print(
-          'print jwt  Response From Valid Appointment  result =>>> ${resultzzz['data']['jwt']}');
+          'print jwt  Response From Valid Appointment  result =>>> ${result['data']['jwt']}');
     } catch (err) {
       print(err);
     }
