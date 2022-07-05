@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // ignore: unused_import
@@ -11,8 +9,6 @@ import 'package:my_clinic/models/appointment.dart';
 import 'package:my_clinic/pages/clinic.dart';
 // ignore: unused_import
 import 'package:my_clinic/pages/login_page.dart';
-import 'package:my_clinic/services/backend.dart';
-import 'package:my_clinic/services/jitsi-config.dart';
 // ignore: unused_import
 import 'package:url_launcher/url_launcher.dart';
 // ignore: depend_on_referenced_packages
@@ -20,7 +16,9 @@ import 'package:intl/intl.dart';
 
 class Welcome extends StatefulWidget {
   @override
+
   // ignore: library_private_types_in_public_api
+
   _WelcomeState createState() => _WelcomeState();
 }
 
@@ -119,8 +117,7 @@ class _WelcomeState extends State<Welcome> {
                           '${appointmentcontrollers.Appointments_list?.data?[index].secretKey}',
                           '${appointmentcontrollers.Appointments_list?.data?[index].patientName}',
                         ),
-                        // launch(
-                        //     '/appointment/${appointmentcontrollers.Appointments_list?.data?[index].sId}/${appointmentcontrollers.Appointments_list?.data?[index].secretKey}')
+                        // launch('/', '/appointment/${appointmentcontrollers.Appointments_list?.data?[index].sId}/${appointmentcontrollers.Appointments_list?.data?[index].secretKey}')
                       },
                     ),
                   );
@@ -128,17 +125,6 @@ class _WelcomeState extends State<Welcome> {
               ),
       ),
     );
-  }
-
-  Future<String> getClinic() async {
-    var token = await Backend.getToken('token');
-    var res = await Backend.get('clinic/', token);
-
-    setState(() {
-      dynamic resBody = json.decode(res);
-      datax = resBody['data'];
-    });
-    return 'Success!';
   }
 
   void _showToast(BuildContext context) {

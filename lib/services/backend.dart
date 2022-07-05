@@ -1,15 +1,22 @@
-// ignore: file_names
 import 'dart:convert';
+
 import 'dart:ffi';
+
 import 'dart:io';
 
+import 'package:dio/dio.dart';
+
+import 'package:flutter/cupertino.dart';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:my_clinic/services/api.dart';
 
-abstract class Backend {
-  static final client = http.Client();
-
+class Backend {
   static final storage = FlutterSecureStorage();
+
+  static final dio = Api().api;
 
   static AndroidOptions getAndroidOptions() => const AndroidOptions(
         encryptedSharedPreferences: true,
@@ -19,39 +26,28 @@ abstract class Backend {
   //   accountName: _getAccountName(),
   // );
 
-  static get(String endpoint, String token) async {
-    var response = await client.get(buildUrl(endpoint), headers: {
-      "Content-Type": "application/json; charset=UTF-8",
-      "Accept": "application/json",
-      "Authorization": "Bearer $token"
-    });
+  // static dioGetRequest() async {
+  //   print('runing before Try and Catch BLOCK');
 
-    if (response.statusCode == 200) {
-      print('you now have already req.body');
-      return response.body;
-    } else {
-      return response;
-    }
-  }
+  //   try {
+  //     final response = await dio.get(TodoEndPoint);
 
-  static Future post(body, String endpoint) async {
-    var response = await client.post(buildUrl(endpoint),
-        body: body,
-        headers: {'Content-Type': 'application/json; charset=UTF-8'});
-    if (response.statusCode == 200) {
-      var target = json.decode(response.body);
-      return target;
-    } else {
-      var result = response.body;
-      return json.decode(result);
-    }
-  }
+  //     print('runing');
 
-  static Uri buildUrl(String endPoint) {
-    String host = 'https://base.maado.me/api/v1/';
-    final apiPath = host + endPoint;
-    return Uri.parse(apiPath);
-  }
+  //     if (response.statusCode == 200) {
+  //       debugPrint('$response');
+
+  //       debugPrint('resonse from server');
+  //       debugPrint('resonse == ${response.statusCode} from server');
+  //       debugPrint(response.data.toString());
+  //       return response.data;
+  //     } else {
+  //       print(response.statusCode);
+  //     }
+  //   } on DioError catch (e) {
+  //     debugPrint('error While Getting data : $e');
+  //   }
+  // }
 
   static Future storeEmail(String key, String fullName) {
     return storage.write(
@@ -63,7 +59,12 @@ abstract class Backend {
         key: key, value: token, aOptions: getAndroidOptions());
   }
 
-  static Future storeJwt(String key, String jwt) async {
+  static Future storeRefreshToken(String key, String refreshToken) async {
+    return await storage.write(
+        key: key, value: refreshToken, aOptions: getAndroidOptions());
+  }
+
+  static Future storeJwtForAppointment(String key, String jwt) async {
     return await storage.write(
         key: key, value: jwt, aOptions: getAndroidOptions());
   }

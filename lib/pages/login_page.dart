@@ -7,13 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:my_clinic/pages/home_page.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:my_clinic/pages/forgetpassord_page.dart';
-import 'package:my_clinic/pages/privacypolicy_page.dart';
-import 'package:my_clinic/pages/terms_page.dart';
+
+import 'package:my_clinic/services/api.dart';
 import 'package:my_clinic/services/backend.dart';
-import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   String? token;
@@ -189,6 +187,7 @@ class _LoginPageState extends State<LoginPage> {
             )));
   }
 
+  // ignore: non_constant_identifier_names
   Future<void> Login(String login, String password) async {
     final body = jsonEncode({
       "login": nameController.text,
@@ -198,18 +197,26 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     if (nameController.text.isNotEmpty || passwordController.text.isNotEmpty) {
-      var response = await Backend.post(body, "auth/login");
+      var response = await Backend.dio
+          .post('https://base.maado.me/api/v1/auth/login', data: body);
 
-      if (response['error'] != null) {
+      print(response);
+      print('printing response while get called');
+      var result = response.data;
+
+      if (result['error'] != null) {
         print('respone $response');
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('${response?['error']['message']}')));
-      } else if (response['data']['token'] != null) {
-        await Backend.storeToken('token', '${response['data']['token']}');
-        print('@@@response $response');
-        await Backend.storeEmail(
-            'email', '${response['data']['user']['email']}');
+            SnackBar(content: Text('${result?['error']['message']}')));
+      } else if (result['data']['token'] != null) {
+        await Backend.storeToken('token', '${result['data']['token']}');
+        await Backend.storeRefreshToken(
+            'refresh_token', '${result['data']['refresh_token']}');
+
+        print('@@@response ${result['data']['refresh_token']}');
+
+        await Backend.storeEmail('email', '${result['data']['user']['email']}');
 
         var target = await Backend.getToken('email');
         print('target Email $target');

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:my_clinic/models/appointment.dart';
+import 'package:my_clinic/services/api.dart';
 import 'package:my_clinic/services/backend.dart';
 import 'package:my_clinic/services/jitsi-config.dart';
 
@@ -30,19 +32,30 @@ class AppointmentControllers extends GetxController {
       // print('new patientName While Clicking => $patientName');
 
       if (token.length != 0) {
-        var res = await Backend.get(
-            'clinic/appointment-validate/$id/$secretKey', token);
+        var rezponse = await Backend.dio.get(
+            'https://base.maado.me/api/v1/clinic/appointment-validate/$id/$secretKey');
+        // dynamic res =
+        //     await Api().api.get('clinic/appointment-validate/$id/$secretKey');
+        // if (res.statusCode == 200) {
+        //   print('res => $res @@ res');
+        // }
 
-        var result = jsonDecode(res);
+        if (rezponse.statusCode == 200) {
+          print('rez.status comde is ${rezponse.statusCode}');
 
-        var jwt = await Backend.storeJwt(
-            'jwt-for-meeting', '${result['data']['jwt']}');
+          print('rez@@Z@ $rezponse');
+          var result = rezponse.data;
+          print('result => $result @@ result');
 
-        if ('${result['data']['jwt']}'.isNotEmpty) {
-          jwt_for_appointment.value = '${result['data']['jwt']}';
-          await Future.delayed(const Duration(seconds: 1));
-          print('jwt_for_appointment => $jwt_for_appointment');
-          return Get.to(() => Meeting());
+          var jwt = await Backend.storeJwtForAppointment(
+              'jwt-for-meeting', '${result['data']['jwt']}');
+
+          if ('${result['data']['jwt']}'.isNotEmpty) {
+            jwt_for_appointment.value = '${result['data']['jwt']}';
+            await Future.delayed(const Duration(seconds: 1));
+            debugPrint('jwt_for_appointment => $jwt_for_appointment');
+            return Get.to(() => Meeting());
+          }
         }
       }
     } catch (err) {
@@ -54,22 +67,25 @@ class AppointmentControllers extends GetxController {
     try {
       var token = await Backend.getToken('token');
 
-      var res = await Backend.get('clinic/my-appointments', token);
+      var res = await Backend.dio
+          .get('https://base.maado.me/api/v1/clinic/my-appointments');
 
-      var result = jsonDecode(res);
-      print(result);
-      print(result);
-      print('res from get result $result');
+      if (res.statusCode == 200) {
+        var result = res.data;
+        print(result);
+        print(result);
+        print('res from get result $result');
 
-      Appointments_list = Appointment.fromJson(result);
-      if (result?['data'].length == 0) {
-        print('@@@@@@@@@@@@@@@@@@@@@@@@');
-        checkAppointMentIsEmpty(true);
-      } else {
-        print('##################');
-        checkAppointMentIsEmpty(false);
+        Appointments_list = Appointment.fromJson(result);
+        if (result?['data'].length == 0) {
+          print('@@@@@@@@@@@@@@@@@@@@@@@@');
+          checkAppointMentIsEmpty(true);
+        } else {
+          print('##################');
+          checkAppointMentIsEmpty(false);
+        }
+        isLoading(true);
       }
-      isLoading(true);
     } on TypeError {
       print(TypeError());
     } catch (err) {
