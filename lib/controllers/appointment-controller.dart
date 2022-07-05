@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:my_clinic/models/appointment.dart';
@@ -33,7 +34,7 @@ class AppointmentControllers extends GetxController {
 
       if (token.length != 0) {
         var response = await Backend.dio.get(
-            'https://base.maado.me/api/v1/clinic/appointment-validate/$id/$secretKey');
+            'http://192.168.1.12/api/v1/clinic/appointment-validate/$id/$secretKey');
         // dynamic res =
         //     await Api().api.get('clinic/appointment-validate/$id/$secretKey');
         // if (res.statusCode == 200) {
@@ -68,7 +69,7 @@ class AppointmentControllers extends GetxController {
       var token = await Backend.getToken('token');
 
       var res = await Backend.dio
-          .get('https://base.maado.me/api/v1/clinic/my-appointments');
+          .get('http://192.168.1.12/api/v1/clinic/my-appointments');
 
       if (res.statusCode == 200) {
         var result = res.data;
@@ -85,8 +86,9 @@ class AppointmentControllers extends GetxController {
           checkAppointMentIsEmpty(false);
         }
         isLoading(true);
+        return res.data;
       }
-    } on TypeError {
+    } on DioErrorType {
       print(TypeError());
     } catch (err) {
       print('err while getting data $err');

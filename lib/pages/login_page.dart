@@ -3,6 +3,7 @@ import 'dart:convert';
 
 // ignore: avoid_web_libraries_in_flutter
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -189,17 +190,23 @@ class _LoginPageState extends State<LoginPage> {
 
   // ignore: non_constant_identifier_names
   Future<void> Login(String login, String password) async {
+    CancelToken cancelToken = CancelToken();
+
     final body = jsonEncode({
       "login": nameController.text,
       "password": passwordController.text,
       "type": "client",
-      "clinicId": "6270321a0584c700120df0ae",
+      "clinicId": "62c40139f15ef6544420416c",
     });
+// clinicId: "62c40139f15ef6544420416c"
+//6270321a0584c700120df0ae
 
     if (nameController.text.isNotEmpty || passwordController.text.isNotEmpty) {
-      var response = await Backend.dio
-          .post('https://base.maado.me/api/v1/auth/login', data: body);
-
+      var response = await Backend.dio.post(
+          'http://192.168.1.12/api/v1/auth/login',
+          data: body,
+          cancelToken: cancelToken);
+// my-backend = http://192.168.1.10/api/v1
       print(response);
       print('printing response while get called');
       var result = response.data;
