@@ -63,7 +63,7 @@ class Api {
     if (response.statusCode == 201) {
       print('response.data ${response.data}');
       print('old accessToken $accessToken');
-      accessToken = response.data;
+      accessToken = response.data.token;
       print('new Refresh Token ${response.data}');
 
       return true;

@@ -32,7 +32,7 @@ class AppointmentControllers extends GetxController {
       // print('new patientName While Clicking => $patientName');
 
       if (token.length != 0) {
-        var rezponse = await Backend.dio.get(
+        var response = await Backend.dio.get(
             'https://base.maado.me/api/v1/clinic/appointment-validate/$id/$secretKey');
         // dynamic res =
         //     await Api().api.get('clinic/appointment-validate/$id/$secretKey');
@@ -40,11 +40,11 @@ class AppointmentControllers extends GetxController {
         //   print('res => $res @@ res');
         // }
 
-        if (rezponse.statusCode == 200) {
-          print('rez.status comde is ${rezponse.statusCode}');
+        if (response.statusCode == 200) {
+          print('rez.status comde is ${response.statusCode}');
 
-          print('rez@@Z@ $rezponse');
-          var result = rezponse.data;
+          print('rez@@Z@ $response');
+          var result = response.data;
           print('result => $result @@ result');
 
           var jwt = await Backend.storeJwtForAppointment(

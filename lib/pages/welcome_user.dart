@@ -6,7 +6,6 @@ import 'package:my_clinic/controllers/appointment-controller.dart';
 // ignore: unused_import
 import 'package:my_clinic/models/appointment.dart';
 // ignore: unused_import
-import 'package:my_clinic/pages/clinic.dart';
 // ignore: unused_import
 import 'package:my_clinic/pages/login_page.dart';
 // ignore: unused_import
