@@ -13,6 +13,7 @@ import 'package:my_clinic/pages/forgetpassord_page.dart';
 
 import 'package:my_clinic/services/api.dart';
 import 'package:my_clinic/services/backend.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   String? token;
@@ -190,13 +191,15 @@ class _LoginPageState extends State<LoginPage> {
 
   // ignore: non_constant_identifier_names
   Future<void> Login(String login, String password) async {
+    final prefs = await SharedPreferences.getInstance();
+
     CancelToken cancelToken = CancelToken();
 
     final body = jsonEncode({
       "login": nameController.text,
       "password": passwordController.text,
       "type": "client",
-      "clinicId": "62c40139f15ef6544420416c",
+      "clinicId": "62c52450c9e36a2628c7ea01",
     });
 // clinicId: "62c40139f15ef6544420416c"
 //6270321a0584c700120df0ae
@@ -218,6 +221,11 @@ class _LoginPageState extends State<LoginPage> {
             SnackBar(content: Text('${result?['error']['message']}')));
       } else if (result['data']['token'] != null) {
         await Backend.storeToken('token', '${result['data']['token']}');
+
+        await prefs.setString('token', '${result['data']['token']}');
+        await prefs.setString(
+            'refresh_token', '${result['data']['refresh_token']}');
+
         await Backend.storeRefreshToken(
             'refresh_token', '${result['data']['refresh_token']}');
 
@@ -228,6 +236,7 @@ class _LoginPageState extends State<LoginPage> {
         var target = await Backend.getToken('email');
         print('target Email $target');
         var token = await Backend.getToken('token');
+
         // ignore: use_build_context_synchronously
         Get.to(() => HomePage());
       }

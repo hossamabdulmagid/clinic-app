@@ -113,8 +113,8 @@ class _HomePageState extends State<HomePage> {
               print(token);
               print('fullName is ===');
               print(fullName);
-              var result = await Backend.deleteToken('token');
-              var target = await Backend.deleteToken('fullName');
+              var result = await Backend.deleteToken();
+              var target = await Backend.deleteToken();
 
               print(result);
               print('result');
