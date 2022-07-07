@@ -197,42 +197,45 @@ class _LoginPageState extends State<LoginPage> {
       "login": nameController.text,
       "password": passwordController.text,
       "type": "client",
-      "clinicId": "62c52450c9e36a2628c7ea01",
+      "clinicId": "6270321a0584c700120df0ae",
     });
 // clinicId: "62c40139f15ef6544420416c"
 //6270321a0584c700120df0ae
     try {
       if (nameController.text.isNotEmpty ||
           passwordController.text.isNotEmpty) {
-        var response = await Backend.dio.post(
-          'http://192.168.1.12/api/v1/auth/login',
-          data: body,
-          cancelToken: cancelToken,
-        );
+        try {
+          var response = await Backend.dio.post(
+            'https://base.maado.me/api/v1/auth/login',
+            data: body,
+            cancelToken: cancelToken,
+          );
 
-        var result = response.data;
-        if (result['error'] != null) {
+          var result = response.data;
+          if (result['data']['token'] != null) {
+            await Backend.storeToken('token', '${result['data']['token']}');
+            await Backend.storeRefreshToken(
+                'refresh_token', '${result['data']['refresh_token']}');
+
+            var refreshToken = await Backend.getRefreshToken('refresh_token');
+
+            print('refreshToken while User Login $refreshToken');
+
+            await Backend.storeEmail(
+                'email', '${result['data']['user']['email']}');
+
+            var target = await Backend.getToken('email');
+            print('target Email $target');
+            var token = await Backend.getToken('token');
+            print('token while user login $token');
+            // ignore: use_build_context_synchronously
+            Get.to(() => HomePage());
+          }
+        } on DioError catch (e) {
+          print("error from DIeError $e");
           // ignore: use_build_context_synchronously
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('${result?['error']['message']}')));
-        } else if (result['data']['token'] != null) {
-          await Backend.storeToken('token', '${result['data']['token']}');
-          await Backend.storeRefreshToken(
-              'refresh_token', '${result['data']['refresh_token']}');
-
-          var refreshToken = await Backend.getRefreshToken('refresh_token');
-
-          print('refreshToken while User Login $refreshToken');
-
-          await Backend.storeEmail(
-              'email', '${result['data']['user']['email']}');
-
-          var target = await Backend.getToken('email');
-          print('target Email $target');
-          var token = await Backend.getToken('token');
-          print('token while user login $token');
-          // ignore: use_build_context_synchronously
-          Get.to(() => HomePage());
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('${e.response?.data['error']['message']}')));
         }
 
         // my-backend = http://192.168.1.10/api/v1

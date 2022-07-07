@@ -19,6 +19,8 @@ class AppointmentControllers extends GetxController {
   final secretKey = ''.obs;
   final patientName = ''.obs;
   final jwt_for_appointment = ''.obs;
+  final baseUrl = 'http://192.168.1.12/api/v1';
+  final baseUrlProduction = 'https://base.maado.me/api/v1';
 
   void validateAppointment(x, y, z) async {
     try {
@@ -34,12 +36,7 @@ class AppointmentControllers extends GetxController {
 
       if (token.length != 0) {
         var response = await Backend.dio.get(
-            'http://192.168.1.12/api/v1/clinic/appointment-validate/$id/$secretKey');
-        // dynamic res =
-        //     await Api().api.get('clinic/appointment-validate/$id/$secretKey');
-        // if (res.statusCode == 200) {
-        //   print('res => $res @@ res');
-        // }
+            '$baseUrlProduction/clinic/appointment-validate/$id/$secretKey');
 
         if (response.statusCode == 200) {
           print('rez.status comde is ${response.statusCode}');
@@ -59,8 +56,8 @@ class AppointmentControllers extends GetxController {
           }
         }
       }
-    } catch (err) {
-      print(err);
+    } on DioError catch (e) {
+      print(e);
     }
   }
 
@@ -68,8 +65,8 @@ class AppointmentControllers extends GetxController {
     try {
       var token = await Backend.getToken('token');
 
-      var res = await Backend.dio
-          .get('http://192.168.1.12/api/v1/clinic/my-appointments');
+      var res =
+          await Backend.dio.get('$baseUrlProduction/clinic/my-appointments');
 
       if (res.statusCode == 200) {
         var result = res.data;
@@ -84,10 +81,8 @@ class AppointmentControllers extends GetxController {
         isLoading(true);
         return res.data;
       }
-    } on DioErrorType {
-      print(TypeError());
-    } catch (err) {
-      print('err while getting data $err');
+    } on DioError catch (e) {
+      print(e);
     } finally {
       isLoading(false);
     }

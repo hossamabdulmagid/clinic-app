@@ -9,6 +9,7 @@ class Api {
   final Dio api = Dio();
   String? accessToken;
   final baseUrl = 'http://192.168.1.12/api/v1';
+  final baseUrlProduction = 'https://base.maado.me/api/v1';
 
   Api() {
     api.interceptors.clear();
@@ -34,7 +35,7 @@ class Api {
             var token;
 
             await api
-                .post("$baseUrl/auth/refresh",
+                .post("$baseUrlProduction/auth/refresh",
                     data: jsonEncode({"refresh_token": refreshtoken}))
                 .then((value) async {
               if (value.statusCode == 200) {
