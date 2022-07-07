@@ -73,7 +73,11 @@ class Backend {
     return await storage.read(key: key, aOptions: getAndroidOptions());
   }
 
+  static Future getRefreshToken(String key) async {
+    return await storage.read(key: key, aOptions: getAndroidOptions());
+  }
+
   static Future deleteToken() async {
-    return await storage.deleteAll();
+    return await storage.deleteAll(aOptions: getAndroidOptions());
   }
 }

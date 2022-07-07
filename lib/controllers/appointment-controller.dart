@@ -73,16 +73,12 @@ class AppointmentControllers extends GetxController {
 
       if (res.statusCode == 200) {
         var result = res.data;
-        print(result);
-        print(result);
-        print('res from get result $result');
+        print('res from get clinic/my-appointments => $result');
 
         Appointments_list = Appointment.fromJson(result);
         if (result?['data'].length == 0) {
-          print('@@@@@@@@@@@@@@@@@@@@@@@@');
           checkAppointMentIsEmpty(true);
         } else {
-          print('##################');
           checkAppointMentIsEmpty(false);
         }
         isLoading(true);
